@@ -19,6 +19,7 @@ import { Subscriptions } from './components/Subscriptions';
 import { FinancialReport } from './components/FinancialReport';
 import { History } from './components/History';
 import { Settings } from './components/Settings';
+import { TransactionCard } from './components/TransactionCard';
 
 function App() {
   const [user, setUser] = useState<UserProfileType | null>(null);
@@ -492,26 +493,28 @@ function App() {
   };
 
   return (
-    <WebLayout
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
-      onAddExpense={() => setIsAddModalOpen(true)}
-      user={user}
-    >
-      {renderActiveTab()}
-      
-      <AddExpenseModal
-        isOpen={isAddModalOpen}
-        onClose={() => {
-          setIsAddModalOpen(false);
-          setEditingExpense(undefined);
-        }}
-        categories={categories}
-        onSave={handleSaveExpense}
-        editingExpense={editingExpense}
-        resetFlag={resetFlag}
-      />
-    </WebLayout>
+    <div>
+      <TransactionCard />
+      <WebLayout
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        onAddExpense={() => setIsAddModalOpen(true)}
+        user={user}
+      >
+        {renderActiveTab()}
+        <AddExpenseModal
+          isOpen={isAddModalOpen}
+          onClose={() => {
+            setIsAddModalOpen(false);
+            setEditingExpense(undefined);
+          }}
+          categories={categories}
+          onSave={handleSaveExpense}
+          editingExpense={editingExpense}
+          resetFlag={resetFlag}
+        />
+      </WebLayout>
+    </div>
   );
 }
 
