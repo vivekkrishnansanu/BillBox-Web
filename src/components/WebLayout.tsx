@@ -87,7 +87,7 @@ export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar (desktop only) */}
-      <aside className={`hidden md:flex flex-col bg-white border-r border-gray-200 h-screen transition-all duration-200 ${sidebarCollapsed ? 'w-20' : 'w-64'} ${isMobile ? 'hidden' : ''}`}>
+      <aside className={`hidden md:flex flex-col bg-white border-r border-gray-200 h-screen transition-all duration-200 ${sidebarCollapsed ? 'w-20' : 'w-72'} ${isMobile ? 'hidden' : ''}`}>
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -259,7 +259,7 @@ export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user
           </div>
         </header>
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0 px-4 sm:px-8">
+        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0 px-8 md:px-16 pt-8">
           {children}
         </main>
         {/* Bottom Navigation (mobile only) */}

@@ -494,7 +494,6 @@ function App() {
 
   return (
     <div>
-      <TransactionCard />
       <WebLayout
         activeTab={activeTab}
         onTabChange={setActiveTab}

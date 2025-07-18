@@ -104,7 +104,6 @@ export function History({
             ))}
           </select>
         </div>
-
       </div>
 
       {/* Results Summary */}
@@ -170,8 +169,8 @@ export function History({
               </div>
             );
           })}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

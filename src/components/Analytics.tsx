@@ -176,7 +176,7 @@ export function Analytics({
                 Daily Average
               </p>
               <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {currency}{analytics.avgDaily ?? 0}
+                {currency}{analytics.avgDaily.toFixed(2)}
               </p>
             </div>
           </div>
@@ -373,7 +373,7 @@ export function Analytics({
               Daily Average
             </h4>
             <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Your daily average is {currency}{analytics.avgDaily ?? 0}. 
+              Your daily average is {currency}{analytics.avgDaily.toFixed(2)}. 
               {analytics.avgDaily > 1000 ? ' Consider setting a daily budget to control spending.' : ' You\'re maintaining good spending discipline!'}
             </p>
           </div>
