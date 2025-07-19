@@ -229,10 +229,10 @@ export function WebLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 shadow-sm" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-bold text-gray-900 capitalize">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 capitalize">
                 {activeTab === 'dashboard' ? 'Dashboard' : 
                  activeTab === 'analytics' ? 'Analytics' :
                  activeTab === 'subscriptions' ? 'Subscriptions' :
@@ -246,7 +246,7 @@ export function WebLayout({
               </h2>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Search */}
               <div className="relative hidden md:block">
                 <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -259,23 +259,23 @@ export function WebLayout({
 
               {/* Notifications */}
               <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-                <Bell size={20} />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                <Bell size={18} className="sm:w-5 sm:h-5" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"></span>
               </button>
 
               {/* Add Expense Button */}
               <button
                 onClick={onAddExpense}
-                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 flex items-center space-x-2"
+                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-3 sm:px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base"
               >
-                <Plus size={20} />
+                <Plus size={16} className="sm:w-5 sm:h-5" />
                 <span className="hidden sm:inline">Add Expense</span>
               </button>
             </div>
           </div>
         </header>
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0 px-8 md:px-16 pt-8">
+        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0 px-4 sm:px-6 md:px-8 lg:px-16 pt-4 sm:pt-6 md:pt-8">
           {children}
         </main>
         {/* Bottom Navigation (mobile only) */}
@@ -325,6 +325,14 @@ export function WebLayout({
                   </div>
                 )}
               </div>
+              {/* Income */}
+              <button
+                onClick={() => { setShowPlansMenu(false); setShowRecordsMenu(false); onTabChange('income'); }}
+                className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${activeTab === 'income' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
+                style={{ minWidth: 44 }}
+              >
+                <DollarSign size={26} />
+              </button>
               {/* Records group: Transactions, Report */}
               <div className="relative">
                 <button

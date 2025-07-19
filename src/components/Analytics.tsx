@@ -116,21 +116,21 @@ export function Analytics({
 
   if (expenses.length === 0) {
     return (
-      <div className="text-center py-16">
-        <div className={`w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 ${
+      <div className="text-center py-8 sm:py-16">
+        <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 ${
           darkMode ? 'bg-slate-800/50' : 'bg-slate-100'
         }`}>
-          <BarChart3 size={48} className={darkMode ? 'text-slate-400' : 'text-slate-600'} />
+          <BarChart3 size={40} className="sm:w-12 sm:h-12 text-slate-600" />
         </div>
-        <h2 className={`text-2xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+        <h2 className={`text-xl sm:text-2xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
           No Data to Analyze
         </h2>
-        <p className={`mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`mb-6 text-sm sm:text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
           Start adding expenses to see analytics and insights
         </p>
         <button 
           onClick={() => window.dispatchEvent(new CustomEvent('openAddExpense'))}
-          className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-2xl px-6 py-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+          className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl sm:rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 font-medium shadow-lg hover:shadow-xl transition-all duration-200 text-sm sm:text-base"
         >
           Add Your First Expense
         </button>
@@ -139,19 +139,19 @@ export function Analytics({
   }
 
   return (
-    <div className={baseClasses + ' px-6 py-8 md:px-12 md:py-10 space-y-8'}>
+    <div className={baseClasses + ' px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-10 space-y-6 sm:space-y-8'}>
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className={`rounded-xl border shadow-lg p-6 md:p-8 ${cardClasses}`}>
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-3 shadow-lg">
-              <DollarSign size={20} className="text-white" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg">
+              <DollarSign size={16} className="sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 This Month
               </p>
-              <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 {currency}{analytics.currentTotal.toLocaleString()}
               </p>
             </div>
@@ -159,23 +159,23 @@ export function Analytics({
           <div className={`flex items-center space-x-1 ${
             analytics.change >= 0 ? 'text-red-500' : 'text-green-500'
           }`}>
-            {analytics.change >= 0 ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+            {analytics.change >= 0 ? <ArrowUpRight size={10} className="sm:w-3 sm:h-3" /> : <ArrowDownRight size={10} className="sm:w-3 sm:h-3" />}
             <span className="text-xs font-medium">
               {Math.abs(analytics.changePercent).toFixed(1)}% vs last month
             </span>
           </div>
         </div>
 
-        <div className={`rounded-xl border shadow-lg p-6 md:p-8 ${cardClasses}`}>
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-3 shadow-lg">
-              <Calendar size={20} className="text-white" />
+        <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg">
+              <Calendar size={16} className="sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Daily Average
               </p>
-              <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 {currency}{analytics.avgDaily.toFixed(2)}
               </p>
             </div>
@@ -185,16 +185,16 @@ export function Analytics({
           </p>
         </div>
 
-        <div className={`rounded-xl border shadow-lg p-6 md:p-8 ${cardClasses}`}>
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-3 shadow-lg">
-              <TrendingUp size={20} className="text-white" />
+        <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-lg">
+              <TrendingUp size={16} className="sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p className={`text-xs sm:text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Top Spending Day
               </p>
-              <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 {analytics.topSpendingDays.length > 0 ? analytics.topSpendingDays[0][0] : 'N/A'}
               </p>
             </div>

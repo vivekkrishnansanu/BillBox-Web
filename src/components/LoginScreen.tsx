@@ -69,7 +69,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 relative overflow-y-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 relative overflow-y-auto">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
@@ -77,45 +77,45 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
       </div>
 
-      <div className="max-w-md w-full relative z-10 flex-1 flex flex-col justify-center">
+      <div className="w-full max-w-md relative z-10">
         {/* Logo and Title - Show in both modes */}
         <div className="text-center mb-6">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 shadow-2xl animate-float">
-            <TrendingUp size={40} className="text-white" />
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-4 shadow-2xl animate-float">
+            <TrendingUp size={32} className="sm:w-10 sm:h-10 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
             BillBox
           </h1>
-          <p className="text-gray-300">Your Smart Financial Companion</p>
+          <p className="text-sm sm:text-base text-gray-300">Your Smart Financial Companion</p>
         </div>
 
         {/* Auth Form */}
-        <div className="bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
               {isLogin ? 'Welcome Back' : 'Get Started'}
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               {isLogin ? 'Sign in to your account' : 'Create your account to start tracking'}
             </p>
           </div>
 
           {/* Success Message */}
           {success && (
-            <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-6">
+            <div className="bg-green-50 border border-green-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 mb-6">
               <div className="flex items-center space-x-2">
-                <CheckCircle size={20} className="text-green-600" />
-                <p className="text-green-800 text-sm">{success}</p>
+                <CheckCircle size={18} className="sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                <p className="text-green-800 text-xs sm:text-sm">{success}</p>
               </div>
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 mb-6">
               <div className="flex items-center space-x-2">
-                <AlertCircle size={20} className="text-red-600" />
-                <p className="text-red-800 text-sm">{error}</p>
+                <AlertCircle size={18} className="sm:w-5 sm:h-5 text-red-600 flex-shrink-0" />
+                <p className="text-red-800 text-xs sm:text-sm">{error}</p>
               </div>
             </div>
           )}
@@ -128,13 +128,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   Full Name
                 </label>
                 <div className="relative">
-                  <User size={20} className="absolute left-3 top-3 text-gray-400" />
+                  <User size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                     required={!isLogin}
                   />
                 </div>
@@ -147,13 +147,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 Email Address
               </label>
               <div className="relative">
-                <Mail size={20} className="absolute left-3 top-3 text-gray-400" />
+                <Mail size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                   required
                 />
               </div>
@@ -165,13 +165,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 Password
               </label>
               <div className="relative">
-                <Lock size={20} className="absolute left-3 top-3 text-gray-400" />
+                <Lock size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={isLogin ? "Enter your password" : "Create a password (min 6 characters)"}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                   required
                   minLength={6}
                 />
@@ -185,13 +185,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <Lock size={20} className="absolute left-3 top-3 text-gray-400" />
+                  <Lock size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                     required={!isLogin}
                     minLength={6}
                   />
@@ -203,17 +203,17 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base"
             >
               {isLoading ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
                   <span>{isLogin ? 'Signing In...' : 'Creating Account...'}</span>
                 </>
               ) : (
                 <>
                   <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
-                  <ArrowRight size={20} />
+                  <ArrowRight size={18} className="sm:w-5 sm:h-5" />
                 </>
               )}
             </button>
@@ -221,7 +221,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
           {/* Toggle Mode */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button
                 onClick={toggleMode}
