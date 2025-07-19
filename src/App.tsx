@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Expense, Category, Settings as SettingsType, UserProfile as UserProfileType, Income, EMI, Savings, Subscription } from './types';
+import { Expense, Category, Settings as SettingsType, Income, EMI, Savings, Subscription } from './types';
+import type { UserProfile as UserProfileType } from './types';
 import { useLocalStorage } from './hooks/useLocalStorage'; 
 import { authService } from './services/authService';
 import { aiService } from './services/aiService';
@@ -22,6 +23,7 @@ import { Settings } from './components/Settings';
 import { TransactionCard } from './components/TransactionCard';
 import { MyIncome } from './components/MyIncome';
 import { supabase } from './lib/supabase';
+import type { User } from '@supabase/supabase-js';
 
 function App() {
   const [user, setUser] = useState<UserProfileType | null>(null);
@@ -61,14 +63,43 @@ function App() {
     };
   }, []);
 
-  // Initialize auth state
+  // Helper to map Supabase User to UserProfile
+  function mapSupabaseUserToUserProfile(user: User | undefined | null): UserProfileType | null {
+    if (!user) return null;
+    return {
+      uid: user.id,
+      email: user.email || '',
+      displayName: user.user_metadata?.full_name || user.email || '',
+      photoURL: user.user_metadata?.avatar_url || '',
+      preferences: {
+        currency: 'INR',
+        language: 'en',
+        reminderDays: 3,
+        reminderTypes: ['in-app'],
+        categories: [],
+      },
+      createdAt: user.created_at || new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+    };
+  }
+
+  // Replace custom authService.onAuthStateChange with official Supabase logic
   useEffect(() => {
-    const unsubscribe = authService.onAuthStateChange((userProfile) => {
-      setUser(userProfile);
+    // Get the current session on mount
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(mapSupabaseUserToUserProfile(session?.user ?? null));
       setIsLoading(false);
     });
 
-    return unsubscribe;
+    // Listen for changes to the auth state
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(mapSupabaseUserToUserProfile(session?.user ?? null));
+      setIsLoading(false);
+    });
+
+    return () => {
+      listener?.subscription.unsubscribe();
+    };
   }, []);
 
   // Initialize AI service
