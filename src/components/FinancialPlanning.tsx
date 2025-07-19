@@ -214,7 +214,7 @@ export function FinancialPlanning({
   }, [actualShowAddIncome, actualSetShowAddIncome]);
 
   return (
-    <div className={`p-6 space-y-6 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`p-6 space-y-6 pb-4 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -303,21 +303,6 @@ export function FinancialPlanning({
             </p>
             <p className={`text-2xl font-bold text-green-600`}>
               {currency}{(currentIncome.monthlyIncome + currentIncome.extraIncome).toLocaleString()}
-            </p>
-          </div>
-
-          {/* Additional Income Info */}
-          <div className={`mt-4 p-3 rounded-lg ${
-            darkMode ? 'bg-blue-900/20 border border-blue-700' : 'bg-blue-50 border border-blue-200'
-          }`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <p className={`text-base font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
-                Need to add more income?
-              </p>
-            </div>
-            <p className={`text-xs ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-              Click "Edit" to modify your income amounts. You can increase your primary income or add more extra income anytime.
             </p>
           </div>
         </div>

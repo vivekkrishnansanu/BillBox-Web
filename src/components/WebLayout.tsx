@@ -103,7 +103,7 @@ export function WebLayout({
   return (
     <div className="flex bg-gray-50">
       {/* Sidebar (desktop only) */}
-      <aside className={`hidden md:flex flex-col bg-white border-r border-gray-200 h-screen transition-all duration-200 ${sidebarCollapsed ? 'w-20' : 'w-72'} ${isMobile ? 'hidden' : ''}`}>
+      <aside className={`hidden md:flex flex-col bg-white border-r border-gray-200 h-screen fixed top-0 left-0 z-40 transition-all duration-200 ${sidebarCollapsed ? 'w-20' : 'w-72'} ${isMobile ? 'hidden' : ''}`}>
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -228,7 +228,7 @@ export function WebLayout({
         </div>
       </aside>
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className={`flex-1 ml-0 md:ml-${sidebarCollapsed ? '20' : '72'}`}>
         {/* Top Header */}
         <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm flex-shrink-0 fixed top-0 left-0 w-full z-50" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">

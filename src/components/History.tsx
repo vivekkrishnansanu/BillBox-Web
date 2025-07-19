@@ -54,6 +54,23 @@ export function History({
   const inputClasses = darkMode
     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400'
     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500';
+
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <div className="rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4 bg-blue-50">
+          <Search size={48} className="text-blue-600" />
+        </div>
+        <h2 className="text-xl font-semibold mb-2 text-gray-900">
+          No categories found
+        </h2>
+        <p className="text-gray-600">
+          Please add categories to view transaction history.
+        </p>
+      </div>
+    );
+  }
+
   if (expenses.length === 0) {
     return (
       <div className="text-center py-16">
