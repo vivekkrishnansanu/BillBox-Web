@@ -16,8 +16,10 @@ import {
   Search,
   Folder,
   Layers,
-  ListChecks
+  ListChecks,
+  DollarSign
 } from 'lucide-react';
+import { Income } from '../types';
 
 interface WebLayoutProps {
   activeTab: string;
@@ -25,10 +27,22 @@ interface WebLayoutProps {
   onAddExpense: () => void;
   children: React.ReactNode;
   user?: any;
+  income?: Income[];
+  onUpdateIncome?: (id: string, incomeData: Partial<Income>) => void;
+  currency?: string;
 }
 
-export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user }: WebLayoutProps) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+export function WebLayout({ 
+  activeTab, 
+  onTabChange, 
+  onAddExpense, 
+  children, 
+  user, 
+  income = [],
+  onUpdateIncome,
+  currency = '₹'
+}: WebLayoutProps) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [showPlansMenu, setShowPlansMenu] = useState(false);
   const [showRecordsMenu, setShowRecordsMenu] = useState(false);
   const plansBtnRef = useRef<HTMLButtonElement>(null);
@@ -41,6 +55,7 @@ export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user
     { id: 'subscriptions', icon: RotateCcw, label: 'Subscriptions', color: 'text-orange-600' },
     { id: 'savings', icon: PiggyBank, label: 'Savings', color: 'text-green-600' },
     { id: 'emi', icon: CreditCard, label: 'EMI Manager', color: 'text-red-600' },
+    { id: 'income', icon: DollarSign, label: 'My Income', color: 'text-emerald-600' },
     { id: 'history', icon: History, label: 'Transaction History', color: 'text-indigo-600' },
     { id: 'report', icon: FileText, label: 'Reports', color: 'text-teal-600' },
   ];
@@ -214,7 +229,7 @@ export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+        <header className="bg-white border-b border-gray-200 px-6 shadow-sm" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <h2 className="text-2xl font-bold text-gray-900 capitalize">
@@ -223,6 +238,7 @@ export function WebLayout({ activeTab, onTabChange, onAddExpense, children, user
                  activeTab === 'subscriptions' ? 'Subscriptions' :
                  activeTab === 'savings' ? 'Savings & Investments' :
                  activeTab === 'emi' ? 'EMI Manager' :
+                 activeTab === 'income' ? 'My Income' :
                  activeTab === 'history' ? 'Transaction History' :
                  activeTab === 'report' ? 'Financial Reports' :
                  activeTab === 'settings' ? 'Settings' :

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Subscription } from '../types';
 import { 
   RotateCcw, 
@@ -9,7 +9,9 @@ import {
   Trash2,
   Play,
   Pause,
-  AlertCircle
+  AlertCircle,
+  Plus,
+  X
 } from 'lucide-react';
 
 interface SubscriptionsProps {
@@ -170,6 +172,23 @@ export function Subscriptions({
   const inputClasses = darkMode
     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400'
     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500';
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showAddModal) {
+        resetForm();
+      }
+    };
+
+    if (showAddModal) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAddModal]);
 
   return (
     <div className={`min-h-screen ${baseClasses}`}>
@@ -373,112 +392,138 @@ export function Subscriptions({
       {/* Add/Edit Subscription Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className={`w-full max-w-md rounded-2xl shadow-2xl ${
-            darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-          } border`}>
-            <div className={`border-b p-6 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {editingSubscription ? 'Edit Subscription' : 'Add Subscription'}
-              </h2>
+          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-green-100 rounded-full p-2">
+                    <Plus size={20} className="text-green-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingSubscription ? 'Edit Subscription' : 'Add Subscription'}
+                  </h2>
+                </div>
+                <button
+                  onClick={resetForm}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
             
-            <div className="p-6 space-y-4">
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Subscription Name *
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g., Netflix, Spotify"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Amount *
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-500 font-semibold">
-                    ₹
-                  </span>
+            <div className="p-6">
+              {/* Main Form Row */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                {/* Subscription Name */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Subscription Name *
+                  </label>
                   <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="199"
-                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g., Netflix"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
                     required
                   />
                 </div>
+
+                {/* Amount */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Amount *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="199"
+                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Billing Frequency */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Billing Frequency *
+                  </label>
+                  <select
+                    value={frequency}
+                    onChange={(e) => setFrequency(e.target.value as 'monthly' | 'quarterly' | 'yearly')}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  >
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                  </select>
+                </div>
+
+                {/* Category */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Category
+                  </label>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  >
+                    {subscriptionCategories.map(cat => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.icon} {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Billing Frequency *
-                </label>
-                <select
-                  value={frequency}
-                  onChange={(e) => setFrequency(e.target.value as 'monthly' | 'quarterly' | 'yearly')}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
-                >
-                  <option value="monthly">Monthly</option>
-                  <option value="quarterly">Quarterly</option>
-                  <option value="yearly">Yearly</option>
-                </select>
+              {/* Second Row */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                {/* Description */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Additional notes"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  />
+                </div>
+
+                {/* Empty spaces for alignment */}
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Category
-                </label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
-                >
-                  {subscriptionCategories.map(cat => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.icon} {cat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Description (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Additional notes"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
-                />
-              </div>
-
-              <div className="flex space-x-3 pt-4">
-                <button
-                  onClick={resetForm}
-                  className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${
-                    darkMode 
-                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleAddSubscription}
-                  disabled={!name || !amount}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 font-medium disabled:opacity-50"
-                >
-                  {editingSubscription ? 'Update' : 'Add'}
-                </button>
+              {/* Bottom Row */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <div></div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={resetForm}
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddSubscription}
+                    disabled={!name || !amount}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {editingSubscription ? 'Update' : 'Add'} Subscription
+                  </button>
+                </div>
               </div>
             </div>
           </div>

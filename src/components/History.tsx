@@ -94,7 +94,7 @@ export function History({
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className={`px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
+            className={`pl-4 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${inputClasses}`}
           >
             <option value="all">{t('allCategories')}</option>
             {categories.map(category => (

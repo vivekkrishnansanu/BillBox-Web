@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { UserProfile as UserProfileType, Expense, Savings, Income } from '../types';
+import { useState, useEffect } from 'react';
+import { UserProfile as UserProfileType } from '../types';
 import { 
   User, 
   Edit3, 
@@ -7,46 +7,39 @@ import {
   Shield, 
   Bell, 
   CreditCard, 
-  TrendingUp,
-  Award,
-  Star,
   ChevronRight,
   Settings,
-  LogOut,
-  Target,
-  Wallet,
-  Calendar
+  LogOut
 } from 'lucide-react';
 
 interface UserProfileProps {
   user: UserProfileType;
   onSignOut: () => void;
   darkMode?: boolean;
-  resetFlag?: boolean;
-  expenses?: Expense[];
-  savings?: Savings[];
-  income?: Income[];
 }
 
-export function UserProfile({ user, onSignOut, darkMode = false, resetFlag = false, expenses = [], savings = [], income = [] }: UserProfileProps) {
+export function UserProfile({ user, onSignOut, darkMode = false }: UserProfileProps) {
   const [showEditProfile, setShowEditProfile] = useState(false);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showEditProfile) {
+        setShowEditProfile(false);
+      }
+    };
+
+    if (showEditProfile) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showEditProfile]);
 
   const creditScore = 750; // Mock credit score
   const membershipTier = 'Gold';
-  let totalSavings = 0;
-  let monthlySpending = 0;
-  if (!resetFlag) {
-    totalSavings = savings.filter(s => s.isActive && !s.isMatured).reduce((sum, s) => sum + s.amount, 0);
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    monthlySpending = expenses.filter(e => e.date.slice(0, 7) === currentMonth).reduce((sum, e) => sum + e.amount, 0);
-  }
-
-  const achievements = [
-    { id: 1, title: 'Savings Master', description: 'Saved ₹1L+ this year', icon: '🎯', earned: true },
-    { id: 2, title: 'Budget Keeper', description: 'Stayed within budget for 6 months', icon: '📊', earned: true },
-    { id: 3, title: 'Investment Pro', description: 'Started 5+ SIPs', icon: '📈', earned: false },
-    { id: 4, title: 'Bill Ninja', description: 'Never missed a bill payment', icon: '⚡', earned: true },
-  ];
 
   const quickActions = [
     { id: 1, title: 'Edit Profile', icon: Edit3, action: () => setShowEditProfile(true) },
@@ -107,7 +100,6 @@ export function UserProfile({ user, onSignOut, darkMode = false, resetFlag = fal
                   {membershipTier} Member
                 </span>
                 <div className="flex items-center space-x-1">
-                  <Star size={16} className="text-yellow-400 fill-current" />
                   <span className="text-white font-medium">{creditScore}</span>
                 </div>
               </div>
@@ -151,92 +143,10 @@ export function UserProfile({ user, onSignOut, darkMode = false, resetFlag = fal
               </div>
             </div>
           </div>
-
-          {/* Financial Overview */}
-          <div className={`rounded-xl border shadow-lg ${cardClasses}`}>
-            <div className="p-6">
-              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Financial Overview
-              </h2>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-4 mb-3 shadow-lg">
-                    <Wallet size={28} className="text-white mx-auto" />
-                  </div>
-                  <p className={`text-lg font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    ₹{totalSavings.toLocaleString()}
-                  </p>
-                  <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                    Total Savings
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-4 mb-3 shadow-lg">
-                    <Target size={28} className="text-white mx-auto" />
-                  </div>
-                  <p className={`text-lg font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                    85%
-                  </p>
-                  <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                    Goal Progress
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Right Column */}
         <div className="space-y-6">
-          {/* Achievements */}
-          <div className={`rounded-xl border shadow-lg ${cardClasses}`}>
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  Achievements
-                </h2>
-                <Award size={24} className="text-yellow-500" />
-              </div>
-              <div className="grid grid-cols-1 gap-4">
-                {achievements.map((achievement) => (
-                  <div
-                    key={achievement.id}
-                    className={`p-4 rounded-xl border transition-all duration-200 ${
-                      achievement.earned
-                        ? darkMode
-                          ? 'bg-emerald-900/20 border-emerald-700'
-                          : 'bg-emerald-50 border-emerald-200'
-                        : darkMode
-                        ? 'bg-slate-700/30 border-slate-600'
-                        : 'bg-slate-50 border-slate-200'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="text-3xl">{achievement.icon}</div>
-                      <div className="flex-1">
-                        <h3 className={`font-semibold mb-1 ${
-                          achievement.earned
-                            ? darkMode ? 'text-emerald-300' : 'text-emerald-700'
-                            : darkMode ? 'text-slate-400' : 'text-slate-500'
-                        }`}>
-                          {achievement.title}
-                        </h3>
-                        <p className={`text-sm ${
-                          achievement.earned
-                            ? darkMode ? 'text-emerald-400' : 'text-emerald-600'
-                            : darkMode ? 'text-slate-500' : 'text-slate-400'
-                        }`}>
-                          {achievement.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
           {/* Account Settings */}
           <div className={`rounded-xl border shadow-lg ${cardClasses}`}>
             <div className="p-6">

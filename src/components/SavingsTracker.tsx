@@ -10,7 +10,9 @@ import {
   Trash2,
   CheckCircle,
   Clock,
-  Percent
+  Percent,
+  Plus,
+  X
 } from 'lucide-react';
 
 interface SavingsTrackerProps {
@@ -191,6 +193,23 @@ export function SavingsTracker({
 
     resetForm();
   };
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showAddModal) {
+        resetForm();
+      }
+    };
+
+    if (showAddModal) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAddModal]);
 
   const resetForm = () => {
     setShowAddModal(false);
@@ -502,282 +521,201 @@ export function SavingsTracker({
       {/* Add/Edit Savings Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className={`w-full max-w-md rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto ${
-            darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
-          } border`}>
-            <div className={`border-b p-6 ${darkMode ? 'border-slate-700' : 'border-slate-200'}`}>
-              <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {editingSavings ? 'Edit Savings' : 'Add Savings Goal'}
-              </h2>
+          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-green-100 rounded-full p-2">
+                    <Plus size={20} className="text-green-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingSavings ? 'Edit Savings' : 'Add Savings Goal'}
+                  </h2>
+                </div>
+                <button
+                  onClick={resetForm}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
             
-            <div className="p-6 space-y-4">
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Savings Type *
-                </label>
-                <select
-                  value={type}
-                  onChange={(e) => setType(e.target.value as 'fd' | 'rd' | 'sip' | 'custom')}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                >
-                  <option value="fd">Fixed Deposit (FD)</option>
-                  <option value="rd">Recurring Deposit (RD)</option>
-                  <option value="sip">SIP Investment</option>
-                  <option value="custom">Custom Savings</option>
-                </select>
+            <div className="p-6">
+              {/* Main Form Row */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                {/* Savings Type */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Savings Type *
+                  </label>
+                  <select
+                    value={type}
+                    onChange={(e) => setType(e.target.value as 'fd' | 'rd' | 'sip' | 'custom')}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  >
+                    <option value="fd">Fixed Deposit (FD)</option>
+                    <option value="rd">Recurring Deposit (RD)</option>
+                    <option value="sip">SIP Investment</option>
+                    <option value="custom">Custom Savings</option>
+                  </select>
+                </div>
+
+                {/* Name */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g., Emergency Fund"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
+                </div>
+
+                {/* Amount/Investment */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {type === 'fd' || type === 'custom' ? 'Amount' : 
+                     type === 'rd' ? 'Monthly Deposit' : 'Monthly Investment'} *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <input
+                      type="number"
+                      value={type === 'fd' || type === 'custom' ? amount : 
+                             type === 'rd' ? monthlyDeposit : monthlyInvestment}
+                      onChange={(e) => {
+                        if (type === 'fd' || type === 'custom') setAmount(e.target.value);
+                        else if (type === 'rd') setMonthlyDeposit(e.target.value);
+                        else setMonthlyInvestment(e.target.value);
+                      }}
+                      placeholder={type === 'fd' || type === 'custom' ? '100000' : 
+                                  type === 'rd' ? '5000' : '10000'}
+                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Rate/Return */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {type === 'sip' ? 'Expected Return (%)' : 'Interest Rate (%)'} *
+                  </label>
+                  <input
+                    type="number"
+                    value={type === 'sip' ? expectedReturn : interestRate}
+                    onChange={(e) => {
+                      if (type === 'sip') setExpectedReturn(e.target.value);
+                      else setInterestRate(e.target.value);
+                    }}
+                    placeholder={type === 'sip' ? '12' : '6.5'}
+                    step="0.1"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g., Emergency Fund, Vacation Fund"
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                  required
-                />
-              </div>
+              {/* Second Row for Additional Fields */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                {/* Period/Tenure/Duration */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {type === 'fd' ? 'Maturity Period (Months)' : 
+                     type === 'rd' ? 'Tenure (Months)' : 
+                     type === 'sip' ? 'Duration (Months)' : 'Period (Months)'} *
+                  </label>
+                  <input
+                    type="number"
+                    value={type === 'fd' ? maturityPeriod : 
+                           type === 'rd' ? tenure : 
+                           type === 'sip' ? duration : ''}
+                    onChange={(e) => {
+                      if (type === 'fd') setMaturityPeriod(e.target.value);
+                      else if (type === 'rd') setTenure(e.target.value);
+                      else if (type === 'sip') setDuration(e.target.value);
+                    }}
+                    placeholder={type === 'fd' ? '12' : 
+                                type === 'rd' ? '24' : 
+                                type === 'sip' ? '60' : '12'}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
+                </div>
 
-              {type === 'fd' && (
-                <>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Principal Amount *
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500 font-semibold">₹</span>
-                      <input
-                        type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="100000"
-                        className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Interest Rate (% per annum) *
-                    </label>
-                    <input
-                      type="number"
-                      value={interestRate}
-                      onChange={(e) => setInterestRate(e.target.value)}
-                      placeholder="6.5"
-                      step="0.1"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Maturity Period (Months) *
-                    </label>
-                    <input
-                      type="number"
-                      value={maturityPeriod}
-                      onChange={(e) => setMaturityPeriod(e.target.value)}
-                      placeholder="12"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                </>
-              )}
+                {/* Fund Name (SIP only) */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {type === 'sip' ? 'Fund Name *' : 'Purpose'}
+                  </label>
+                  <input
+                    type="text"
+                    value={type === 'sip' ? fundName : purpose}
+                    onChange={(e) => {
+                      if (type === 'sip') setFundName(e.target.value);
+                      else setPurpose(e.target.value);
+                    }}
+                    placeholder={type === 'sip' ? 'e.g., HDFC Top 100 Fund' : 'e.g., Emergency Fund'}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required={type === 'sip'}
+                  />
+                </div>
 
-              {type === 'rd' && (
-                <>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Monthly Deposit *
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500 font-semibold">₹</span>
-                      <input
-                        type="number"
-                        value={monthlyDeposit}
-                        onChange={(e) => setMonthlyDeposit(e.target.value)}
-                        placeholder="5000"
-                        className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Interest Rate (% per annum) *
-                    </label>
-                    <input
-                      type="number"
-                      value={interestRate}
-                      onChange={(e) => setInterestRate(e.target.value)}
-                      placeholder="6.0"
-                      step="0.1"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Tenure (Months) *
-                    </label>
-                    <input
-                      type="number"
-                      value={tenure}
-                      onChange={(e) => setTenure(e.target.value)}
-                      placeholder="24"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                </>
-              )}
-
-              {type === 'sip' && (
-                <>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Fund Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={fundName}
-                      onChange={(e) => setFundName(e.target.value)}
-                      placeholder="e.g., HDFC Top 100 Fund"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Monthly Investment *
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500 font-semibold">₹</span>
-                      <input
-                        type="number"
-                        value={monthlyInvestment}
-                        onChange={(e) => setMonthlyInvestment(e.target.value)}
-                        placeholder="10000"
-                        className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Expected Annual Return (%) *
-                    </label>
-                    <input
-                      type="number"
-                      value={expectedReturn}
-                      onChange={(e) => setExpectedReturn(e.target.value)}
-                      placeholder="12"
-                      step="0.1"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Duration (Months) *
-                    </label>
-                    <input
-                      type="number"
-                      value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
-                      placeholder="60"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                      required
-                    />
-                  </div>
-                </>
-              )}
-
-              {type === 'custom' && (
-                <>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Amount *
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500 font-semibold">₹</span>
-                      <input
-                        type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="50000"
-                        className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Frequency
-                    </label>
+                {/* Frequency (Custom only) */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    {type === 'custom' ? 'Frequency' : 'Start Date *'}
+                  </label>
+                  {type === 'custom' ? (
                     <select
                       value={frequency}
                       onChange={(e) => setFrequency(e.target.value as 'one-time' | 'monthly' | 'quarterly' | 'yearly')}
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
+                      className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
                     >
                       <option value="one-time">One-time</option>
                       <option value="monthly">Monthly</option>
                       <option value="quarterly">Quarterly</option>
                       <option value="yearly">Yearly</option>
                     </select>
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      Purpose
-                    </label>
+                  ) : (
                     <input
-                      type="text"
-                      value={purpose}
-                      onChange={(e) => setPurpose(e.target.value)}
-                      placeholder="e.g., Emergency Fund, Vacation"
-                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                      required
                     />
-                  </div>
-                </>
-              )}
+                  )}
+                </div>
 
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Start Date *
-                </label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                  required
-                />
+                {/* Empty space for alignment */}
+                <div></div>
               </div>
 
-              <div className="flex space-x-3 pt-4">
-                <button
-                  onClick={resetForm}
-                  className={`flex-1 px-6 py-3 rounded-xl font-medium transition-colors ${
-                    darkMode 
-                      ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' 
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleAddSavings}
-                  disabled={!name || !amount}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium disabled:opacity-50 shadow-lg"
-                >
-                  {editingSavings ? 'Update' : 'Add'}
-                </button>
+              {/* Bottom Row */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <div></div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={resetForm}
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddSavings}
+                    disabled={!name || !amount}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {editingSavings ? 'Update' : 'Add'} Savings
+                  </button>
+                </div>
               </div>
             </div>
           </div>

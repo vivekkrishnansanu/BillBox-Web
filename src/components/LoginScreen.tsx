@@ -69,7 +69,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 relative overflow-y-auto">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
@@ -77,9 +77,9 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
       </div>
 
-      <div className="max-w-md w-full relative z-10">
-        {/* Logo and Title */}
-        <div className="text-center mb-8">
+      <div className="max-w-md w-full relative z-10 flex-1 flex flex-col justify-center">
+        {/* Logo and Title - Show in both modes */}
+        <div className="text-center mb-6">
           <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 shadow-2xl animate-float">
             <TrendingUp size={40} className="text-white" />
           </div>
@@ -87,28 +87,6 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             BillBox
           </h1>
           <p className="text-gray-300">Your Smart Financial Companion</p>
-        </div>
-
-        {/* Feature Highlights */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="text-center">
-            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-3 mb-2">
-              <Brain size={20} className="text-white mx-auto" />
-            </div>
-            <p className="text-xs text-gray-300">AI Insights</p>
-          </div>
-          <div className="text-center">
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl p-3 mb-2">
-              <Shield size={20} className="text-white mx-auto" />
-            </div>
-            <p className="text-xs text-gray-300">Secure</p>
-          </div>
-          <div className="text-center">
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-3 mb-2">
-              <Zap size={20} className="text-white mx-auto" />
-            </div>
-            <p className="text-xs text-gray-300">Fast</p>
-          </div>
         </div>
 
         {/* Auth Form */}

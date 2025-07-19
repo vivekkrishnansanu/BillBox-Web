@@ -11,7 +11,9 @@ import {
   Edit2,
   Trash2,
   Target,
-  AlertCircle
+  AlertCircle,
+  Plus,
+  X
 } from 'lucide-react';
 
 interface EMIManagerProps {
@@ -219,6 +221,28 @@ export function EMIManager({
       setCategory('loan');
     }
   }, [resetFlag]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showAddEMI) {
+        setShowAddEMI(false);
+        setEditingEMI(null);
+        setEmiName('');
+        setMonthlyAmount('');
+        setTenure('');
+        setCategory('loan');
+      }
+    };
+
+    if (showAddEMI) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAddEMI]);
 
   return (
     <div className={baseClasses}>
@@ -436,90 +460,19 @@ export function EMIManager({
 
       {/* Add EMI Modal */}
       {showAddEMI && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className={`${baseClasses} rounded-xl w-full max-w-md shadow-2xl`}>
-            <div className={`border-b p-6 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {editingEMI ? 'Edit EMI' : 'Add New EMI'}
-              </h2>
-            </div>
-            
-            <div className="p-6 space-y-4">
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  EMI Name *
-                </label>
-                <input
-                  type="text"
-                  value={emiName}
-                  onChange={(e) => setEmiName(e.target.value)}
-                  placeholder="e.g., Home Loan, Car Loan"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 ${inputClasses}`}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Monthly EMI Amount *
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-500 font-semibold">
-                    ₹
-                  </span>
-                  <input
-                    type="number"
-                    value={monthlyAmount}
-                    onChange={(e) => setMonthlyAmount(e.target.value)}
-                    placeholder="15000"
-                    className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 ${inputClasses}`}
-                    required
-                  />
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-green-100 rounded-full p-2">
+                    <Plus size={20} className="text-green-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    {editingEMI ? 'Edit EMI' : 'Add New EMI'}
+                  </h2>
                 </div>
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Tenure (Months) *
-                </label>
-                <input
-                  type="number"
-                  value={tenure}
-                  onChange={(e) => setTenure(e.target.value)}
-                  placeholder="24"
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Category
-                </label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
-                >
-                  {emiCategories.map(cat => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.icon} {cat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {monthlyAmount && tenure && (
-                <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                  <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                    Total EMI Amount: <span className="font-semibold">
-                      {currency}{(parseFloat(monthlyAmount) * parseInt(tenure)).toLocaleString()}
-                    </span>
-                  </p>
-                </div>
-              )}
-
-              <div className="flex space-x-3 pt-4">
                 <button
                   onClick={() => {
                     setShowAddEMI(false);
@@ -529,21 +482,119 @@ export function EMIManager({
                     setTenure('');
                     setCategory('loan');
                   }}
-                  className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${
-                    darkMode 
-                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                 >
-                  Cancel
+                  <X size={20} />
                 </button>
-                <button
-                  onClick={handleAddEMI}
-                  disabled={!emiName || !monthlyAmount || !tenure}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium disabled:opacity-50 shadow-lg"
-                >
-                  {editingEMI ? 'Update' : 'Add EMI'}
-                </button>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              {/* Main Form Row */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                {/* EMI Name */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    EMI Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={emiName}
+                    onChange={(e) => setEmiName(e.target.value)}
+                    placeholder="e.g., Home Loan"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
+                </div>
+
+                {/* Monthly Amount */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Monthly EMI Amount *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <input
+                      type="number"
+                      value={monthlyAmount}
+                      onChange={(e) => setMonthlyAmount(e.target.value)}
+                      placeholder="15000"
+                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Tenure */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Tenure (Months) *
+                  </label>
+                  <input
+                    type="number"
+                    value={tenure}
+                    onChange={(e) => setTenure(e.target.value)}
+                    placeholder="24"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
+                </div>
+
+                {/* Category */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Category
+                  </label>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  >
+                    {emiCategories.map(cat => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.icon} {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Total Amount Preview */}
+              {monthlyAmount && tenure && (
+                <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-600">
+                    Total EMI Amount: <span className="font-semibold text-gray-900">
+                      {currency}{(parseFloat(monthlyAmount) * parseInt(tenure)).toLocaleString()}
+                    </span>
+                  </p>
+                </div>
+              )}
+
+              {/* Bottom Row */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <div></div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => {
+                      setShowAddEMI(false);
+                      setEditingEMI(null);
+                      setEmiName('');
+                      setMonthlyAmount('');
+                      setTenure('');
+                      setCategory('loan');
+                    }}
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddEMI}
+                    disabled={!emiName || !monthlyAmount || !tenure}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {editingEMI ? 'Update' : 'Add'} EMI
+                  </button>
+                </div>
               </div>
             </div>
           </div>

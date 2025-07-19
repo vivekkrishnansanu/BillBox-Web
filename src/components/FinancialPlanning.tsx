@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Income, EMI, Expense, FinancialForecast, Savings } from '../types';
 import { useTranslation } from '../hooks/useTranslation';
 import { 
@@ -53,6 +53,32 @@ export function FinancialPlanning({
   const [incomeSource, setIncomeSource] = useState('');
 
   const currentMonth = new Date().toISOString().slice(0, 7);
+  
+  // Reset form state when modal is closed externally
+  useEffect(() => {
+    console.log('🔧 Modal state changed:', actualShowAddIncome);
+    if (!actualShowAddIncome) {
+      setEditingIncome(null);
+      setMonthlyIncome('');
+      setExtraIncome('');
+      setIncomeSource('');
+    }
+  }, [actualShowAddIncome]);
+
+  // Reset form state when component mounts or income changes
+  useEffect(() => {
+    if (!actualShowAddIncome) {
+      setEditingIncome(null);
+      setMonthlyIncome('');
+      setExtraIncome('');
+      setIncomeSource('');
+    }
+  }, [income, actualShowAddIncome]);
+
+  // Debug modal rendering
+  useEffect(() => {
+    console.log('🔧 Modal should render:', actualShowAddIncome, 'editingIncome:', editingIncome);
+  }, [actualShowAddIncome, editingIncome]);
   
   const currentIncome = useMemo(() => {
     if (resetFlag) return {
@@ -141,6 +167,16 @@ export function FinancialPlanning({
   };
 
   const handleEditIncome = (incomeItem: Income) => {
+    console.log('🔧 Editing income:', incomeItem);
+    setEditingIncome(incomeItem);
+    setMonthlyIncome(incomeItem.monthlyIncome.toString());
+    setExtraIncome(incomeItem.extraIncome.toString());
+    setIncomeSource(incomeItem.incomeSource || '');
+    console.log('🔧 Setting modal to open');
+    actualSetShowAddIncome(true);
+  };
+
+  const handleAddAdditionalIncome = (incomeItem: Income) => {
     setEditingIncome(incomeItem);
     setMonthlyIncome(incomeItem.monthlyIncome.toString());
     setExtraIncome(incomeItem.extraIncome.toString());
@@ -155,6 +191,27 @@ export function FinancialPlanning({
   const inputClasses = darkMode
     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-green-400'
     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-500';
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && actualShowAddIncome) {
+        actualSetShowAddIncome(false);
+        setEditingIncome(null);
+        setMonthlyIncome('');
+        setExtraIncome('');
+        setIncomeSource('');
+      }
+    };
+
+    if (actualShowAddIncome) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [actualShowAddIncome, actualSetShowAddIncome]);
 
   return (
     <div className={`p-6 space-y-6 min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -196,19 +253,27 @@ export function FinancialPlanning({
             <div className="flex space-x-2">
               <button
                 onClick={() => handleEditIncome(currentIncome)}
-                className={`p-2 rounded-lg transition-colors ${
-                  darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
+                  darkMode 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
+                title="Edit Income"
               >
-                <Edit2 size={16} />
+                <Edit2 size={14} />
+                <span>Edit</span>
               </button>
               <button
                 onClick={() => onDeleteIncome(currentIncome.id)}
-                className={`p-2 rounded-lg transition-colors ${
-                  darkMode ? 'hover:bg-red-900/20 text-red-400' : 'hover:bg-red-50 text-red-600'
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
+                  darkMode 
+                    ? 'bg-red-600 hover:bg-red-700 text-white' 
+                    : 'bg-red-500 hover:bg-red-600 text-white'
                 }`}
+                title="Delete Income"
               >
-                <Trash2 size={16} />
+                <Trash2 size={14} />
+                <span>Delete</span>
               </button>
             </div>
           </div>
@@ -238,6 +303,21 @@ export function FinancialPlanning({
             </p>
             <p className={`text-2xl font-bold text-green-600`}>
               {currency}{(currentIncome.monthlyIncome + currentIncome.extraIncome).toLocaleString()}
+            </p>
+          </div>
+
+          {/* Additional Income Info */}
+          <div className={`mt-4 p-3 rounded-lg ${
+            darkMode ? 'bg-blue-900/20 border border-blue-700' : 'bg-blue-50 border border-blue-200'
+          }`}>
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <p className={`text-sm font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+                Need to add more income?
+              </p>
+            </div>
+            <p className={`text-xs ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+              Click "Edit" to modify your income amounts. You can increase your primary income or add more extra income anytime.
             </p>
           </div>
         </div>
@@ -346,12 +426,17 @@ export function FinancialPlanning({
               <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 {editingIncome ? 'Edit Income' : 'Add Monthly Income'}
               </h2>
+              {editingIncome && (
+                <p className={`text-sm mt-1 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Update your income amounts. You can increase or decrease any field.
+                </p>
+              )}
             </div>
             
             <div className="p-6 space-y-4">
               <div>
                 <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Monthly Income *
+                  Primary Monthly Income *
                 </label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-500 font-semibold">
@@ -361,16 +446,21 @@ export function FinancialPlanning({
                     type="number"
                     value={monthlyIncome}
                     onChange={(e) => setMonthlyIncome(e.target.value)}
-                    placeholder="50000"
+                    placeholder={editingIncome ? "Current: " + editingIncome.monthlyIncome : "50000"}
                     className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 ${inputClasses}`}
                     required
                   />
                 </div>
+                {editingIncome && (
+                  <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    Current: ₹{editingIncome.monthlyIncome.toLocaleString()}
+                  </p>
+                )}
               </div>
 
               <div>
                 <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  Extra Income
+                  Extra Income (Bonuses, Freelance, etc.)
                 </label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-500 font-semibold">
@@ -380,10 +470,15 @@ export function FinancialPlanning({
                     type="number"
                     value={extraIncome}
                     onChange={(e) => setExtraIncome(e.target.value)}
-                    placeholder="5000"
+                    placeholder={editingIncome ? "Current: " + editingIncome.extraIncome : "5000"}
                     className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 ${inputClasses}`}
                   />
                 </div>
+                {editingIncome && (
+                  <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    Current: ₹{editingIncome.extraIncome.toLocaleString()}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -398,6 +493,25 @@ export function FinancialPlanning({
                   className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-emerald-500 ${inputClasses}`}
                 />
               </div>
+
+              {editingIncome && (
+                <div className={`p-3 rounded-lg ${
+                  darkMode ? 'bg-blue-900/20 border border-blue-700' : 'bg-blue-50 border border-blue-200'
+                }`}>
+                  <div className="flex items-center space-x-2 mb-1">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <p className={`text-sm font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+                      Total Income Preview
+                    </p>
+                  </div>
+                  <p className={`text-lg font-bold ${darkMode ? 'text-blue-200' : 'text-blue-800'}`}>
+                    ₹{((parseFloat(monthlyIncome) || 0) + (parseFloat(extraIncome) || 0)).toLocaleString()}
+                  </p>
+                  <p className={`text-xs ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                    Primary: ₹{(parseFloat(monthlyIncome) || 0).toLocaleString()} + Extra: ₹{(parseFloat(extraIncome) || 0).toLocaleString()}
+                  </p>
+                </div>
+              )}
 
               <div className="flex space-x-3 pt-4">
                 <button
@@ -421,7 +535,7 @@ export function FinancialPlanning({
                   disabled={!monthlyIncome}
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium disabled:opacity-50 shadow-lg"
                 >
-                  {editingIncome ? 'Update' : 'Save'}
+                  {editingIncome ? 'Update Income' : 'Save Income'}
                 </button>
               </div>
             </div>

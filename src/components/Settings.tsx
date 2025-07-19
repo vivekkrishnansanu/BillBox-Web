@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation'; 
 import { Settings as SettingsType, UserProfile } from '../types';
 import { authService } from '../services/authService';
@@ -79,6 +79,23 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
       </div>
     </button>
   );
+
+  // Handle escape key for reset modal
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showResetModal) {
+        setShowResetModal(false);
+      }
+    };
+
+    if (showResetModal) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showResetModal]);
 
   return (
     <div className="p-6 space-y-6 min-h-screen bg-gray-50 text-gray-900">

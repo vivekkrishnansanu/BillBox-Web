@@ -20,6 +20,7 @@ import { FinancialReport } from './components/FinancialReport';
 import { History } from './components/History';
 import { Settings } from './components/Settings';
 import { TransactionCard } from './components/TransactionCard';
+import { MyIncome } from './components/MyIncome';
 
 function App() {
   const [user, setUser] = useState<UserProfileType | null>(null);
@@ -401,10 +402,6 @@ function App() {
           <UserProfile
             user={user}
             onSignOut={handleSignOut}
-            expenses={expenses}
-            savings={savings}
-            income={income}
-            resetFlag={resetFlag}
           />
         );
       case 'history':
@@ -487,6 +484,17 @@ function App() {
             onResetData={handleResetAllData}
           />
         );
+      case 'income':
+        return (
+          <MyIncome
+            income={income}
+            onAddIncome={handleAddIncome}
+            onUpdateIncome={handleUpdateIncome}
+            onDeleteIncome={handleDeleteIncome}
+            currency={currencySymbol}
+            resetFlag={resetFlag}
+          />
+        );
       default:
         return null;
     }
@@ -499,6 +507,9 @@ function App() {
         onTabChange={setActiveTab}
         onAddExpense={() => setIsAddModalOpen(true)}
         user={user}
+        income={income}
+        onUpdateIncome={handleUpdateIncome}
+        currency={currencySymbol}
       >
         {renderActiveTab()}
         <AddExpenseModal
