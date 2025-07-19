@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { UserProfile } from '../types';
 import { authService } from '../services/authService';
 import { TrendingUp, ArrowRight, Shield, Zap, Brain, Mail, Lock, User, AlertCircle, CheckCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface LoginScreenProps {
   onLogin: (user: UserProfile) => void;
@@ -18,6 +19,11 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
+
+  // 1. Add state for forgot password modal
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotStatus, setForgotStatus] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +72,19 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
     setPassword('');
     setConfirmPassword('');
     setFullName('');
+  };
+
+  // 2. Add handler for sending reset email
+  const handleForgotPassword = async () => {
+    setForgotStatus('');
+    const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
+      redirectTo: window.location.origin + '/reset-password',
+    });
+    if (error) {
+      setForgotStatus(error.message);
+    } else {
+      setForgotStatus('Password reset email sent! Check your inbox.');
+    }
   };
 
   return (
@@ -178,6 +197,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               </div>
             </div>
 
+            {/* 3. Add 'Forgot Password?' link below password field */}
+            <div className="text-right mt-2">
+              <button type="button" className="text-emerald-600 text-sm hover:underline" onClick={() => setShowForgotModal(true)}>
+                Forgot Password?
+              </button>
+            </div>
+
             {/* Confirm Password (Sign Up Only) */}
             {!isLogin && (
               <div>
@@ -232,6 +258,35 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             </p>
           </div>
         </div>
+
+        {/* 4. Add modal for forgot password */}
+        {showForgotModal && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-6 w-full max-w-xs shadow-2xl">
+              <h2 className="text-lg font-bold mb-4 text-gray-900">Reset Password</h2>
+              <input
+                type="email"
+                value={forgotEmail}
+                onChange={e => setForgotEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full mb-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              />
+              <button
+                onClick={handleForgotPassword}
+                className="w-full bg-emerald-600 text-white rounded-lg py-2 font-medium hover:bg-emerald-700 transition-colors mb-2"
+              >
+                Send Reset Email
+              </button>
+              {forgotStatus && <div className="text-sm text-center mb-2 text-emerald-600">{forgotStatus}</div>}
+              <button
+                onClick={() => setShowForgotModal(false)}
+                className="w-full bg-gray-200 text-gray-700 rounded-lg py-2 font-medium hover:bg-gray-300 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
 
         <p className="text-center text-xs text-gray-400 mt-4 sm:mt-6">
           Secure authentication powered by Supabase
