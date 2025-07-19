@@ -169,21 +169,6 @@ export function MyIncome({
         </button>
       </div>
 
-      {/* Info Section */}
-      <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
-        <div className="flex items-center space-x-2 sm:space-x-3 mb-3">
-          <div className="bg-blue-100 rounded-lg p-1.5 sm:p-2">
-            <DollarSign size={14} className="sm:w-4 sm:h-4 text-blue-600" />
-          </div>
-          <h3 className="text-base sm:text-sm font-semibold text-gray-900">Income Management</h3>
-        </div>
-        <div className="space-y-1 text-base text-gray-600">
-          <p>• Primary income for your main salary and regular earnings</p>
-          <p>• Extra income for freelance work, bonuses, and additional sources</p>
-          <p>• Edit anytime to update your current month's income</p>
-        </div>
-      </div>
-
       {/* Edit Modal - Correct Structure */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
