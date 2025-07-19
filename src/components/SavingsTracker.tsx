@@ -549,29 +549,38 @@ export function SavingsTracker({
             
             <div className="p-6">
               {/* Main Form Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                {/* Row 1: Amount/Investment & Name */}
+              <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
                 <div className="space-y-2">
                   <label className="block text-base font-medium text-gray-700">
-                    {type === 'fd' || type === 'custom' ? 'Amount' : 
-                     type === 'rd' ? 'Monthly Deposit' : 'Monthly Investment'} *
+                    Savings Type *
                   </label>
-                  <div>
-                    <input
-                      type="number"
-                      value={type === 'fd' || type === 'custom' ? amount : 
-                             type === 'rd' ? monthlyDeposit : monthlyInvestment}
-                      onChange={(e) => {
-                        if (type === 'fd' || type === 'custom') setAmount(e.target.value);
-                        else if (type === 'rd') setMonthlyDeposit(e.target.value);
-                        else setMonthlyInvestment(e.target.value);
-                      }}
-                      placeholder={type === 'fd' || type === 'custom' ? '100000' : 
-                                  type === 'rd' ? '5000' : '10000'}
-                      className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                      required
-                    />
-                  </div>
+                  <select
+                    value={type}
+                    onChange={(e) => setType(e.target.value as 'fd' | 'rd' | 'sip' | 'custom')}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  >
+                    <option value="fd">Fixed Deposit (FD)</option>
+                    <option value="rd">Recurring Deposit (RD)</option>
+                    <option value="sip">SIP Investment</option>
+                    <option value="custom">Custom Savings</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-base font-medium text-gray-700">Amount *</label>
+                  <input
+                    type="number"
+                    value={type === 'fd' || type === 'custom' ? amount : 
+                           type === 'rd' ? monthlyDeposit : monthlyInvestment}
+                    onChange={(e) => {
+                      if (type === 'fd' || type === 'custom') setAmount(e.target.value);
+                      else if (type === 'rd') setMonthlyDeposit(e.target.value);
+                      else setMonthlyInvestment(e.target.value);
+                    }}
+                    placeholder={type === 'fd' || type === 'custom' ? '100000' : 
+                                type === 'rd' ? '5000' : '10000'}
+                    className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="block text-base font-medium text-gray-700">Name *</label>
