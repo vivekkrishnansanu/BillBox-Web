@@ -189,7 +189,7 @@ export function UserProfile({ user, onSignOut, darkMode = false }: UserProfilePr
       {/* Edit Profile Modal */}
       {showEditProfile && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className={`w-full max-w-md rounded-xl shadow-2xl ${
+          <div className={`w-full max-w-md rounded-xl shadow-2xl overflow-y-auto max-h-[100dvh] ${
             darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
           } border`}>
             <div className="p-6">

@@ -111,50 +111,50 @@ export function MyIncome({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
         {/* Primary Income Card */}
         <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
-          <div className="flex items-center space-x-2 sm:space-x-3 mb-2">
-            <div className="bg-blue-100 rounded-lg p-1.5 sm:p-2">
-              <Calendar size={14} className="sm:w-4 sm:h-4 text-blue-600" />
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-blue-100 rounded-lg p-1.5 sm:p-2">
+                <Calendar size={14} className="sm:w-4 sm:h-4 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="text-base sm:text-sm font-medium text-gray-900">Primary Income</h3>
+                <p className="text-base text-gray-500">Monthly salary</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-sm font-medium text-gray-900">Primary Income</h3>
-              <p className="text-base text-gray-500">Monthly salary</p>
-            </div>
+            <p className="text-xl font-bold text-gray-900">₹{currentIncome?.monthlyIncome.toLocaleString() || '0'}</p>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-gray-900">
-            {currency}{currentIncome?.monthlyIncome.toLocaleString() || '0'}
-          </p>
         </div>
 
         {/* Extra Income Card */}
         <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
-          <div className="flex items-center space-x-2 sm:space-x-3 mb-2">
-            <div className="bg-purple-100 rounded-lg p-1.5 sm:p-2">
-              <Plus size={14} className="sm:w-4 sm:h-4 text-purple-600" />
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-purple-100 rounded-lg p-1.5 sm:p-2">
+                <Plus size={14} className="sm:w-4 sm:h-4 text-purple-600" />
+              </div>
+              <div>
+                <h3 className="text-base sm:text-sm font-medium text-gray-900">Extra Income</h3>
+                <p className="text-base text-gray-500">Freelance, bonuses</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-sm font-medium text-gray-900">Extra Income</h3>
-              <p className="text-base text-gray-500">Freelance, bonuses</p>
-            </div>
+            <p className="text-xl font-bold text-gray-900">₹{currentIncome?.extraIncome.toLocaleString() || '0'}</p>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-gray-900">
-            {currency}{currentIncome?.extraIncome.toLocaleString() || '0'}
-          </p>
         </div>
 
         {/* Total Income Card */}
         <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
-          <div className="flex items-center space-x-2 sm:space-x-3 mb-2">
-            <div className="bg-green-100 rounded-lg p-1.5 sm:p-2">
-              <DollarSign size={14} className="sm:w-4 sm:h-4 text-green-600" />
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-green-100 rounded-lg p-1.5 sm:p-2">
+                <DollarSign size={14} className="sm:w-4 sm:h-4 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-base sm:text-sm font-medium text-gray-900">Total Income</h3>
+                <p className="text-base text-gray-500">This month</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-sm font-medium text-gray-900">Total Income</h3>
-              <p className="text-base text-gray-500">This month</p>
-            </div>
+            <p className="text-xl font-bold text-green-600">₹{currentIncome ? (currentIncome.monthlyIncome + currentIncome.extraIncome).toLocaleString() : '0'}</p>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-green-600">
-            {currency}{currentIncome ? (currentIncome.monthlyIncome + currentIncome.extraIncome).toLocaleString() : '0'}
-          </p>
         </div>
       </div>
 
@@ -172,7 +172,7 @@ export function MyIncome({
       {/* Edit Modal - Correct Structure */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl">
+          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl overflow-y-auto max-h-[100dvh]">
             {/* Modal Header */}
             <div className="p-4 sm:p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -216,18 +216,11 @@ export function MyIncome({
                 <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
                   Primary Income (Monthly Salary)
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    {currency}
-                  </span>
-                  <input
-                    type="number"
-                    value={primaryIncome}
-                    onChange={(e) => setPrimaryIncome(e.target.value)}
-                    className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors text-sm sm:text-base"
-                    placeholder="50000"
-                    autoFocus
-                  />
+                <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 mb-4">
+                  <div className="flex items-center text-xl font-bold text-gray-900">
+                    <span className="text-emerald-600">₹</span>
+                    <span className="ml-2">{primaryIncome || '0.00'}</span>
+                  </div>
                 </div>
               </div>
               
@@ -237,15 +230,14 @@ export function MyIncome({
                   Extra Income (Freelance, Bonuses, etc.)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    {currency}
-                  </span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">₹</span>
                   <input
                     type="number"
-                    value={extraIncome}
-                    onChange={(e) => setExtraIncome(e.target.value)}
-                    className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors text-sm sm:text-base"
+                    className="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 text-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="5000"
+                    value={extraIncome}
+                    onChange={e => setExtraIncome(e.target.value)}
+                    min="0"
                   />
                 </div>
               </div>

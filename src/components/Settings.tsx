@@ -387,8 +387,8 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
 
       {/* Reset Confirmation Modal */}
       {showResetModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full border border-red-200">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full border border-red-200 overflow-y-auto max-h-[100dvh]">
             <h2 className="text-xl font-bold text-red-700 mb-3">Confirm Data Reset</h2>
             <p className="text-base text-gray-700 mb-6">Are you sure you want to <span className='text-red-600 font-semibold'>reset all your data</span>? This action cannot be undone and will permanently delete all your account data.</p>
             <div className="flex justify-end gap-3">
