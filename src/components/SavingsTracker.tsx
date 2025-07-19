@@ -316,7 +316,7 @@ export function SavingsTracker({
   };
 
   return (
-    <div className="w-full p-6 space-y-6 pb-12">
+    <div className="w-full px-4 sm:px-6 space-y-6 pb-12">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

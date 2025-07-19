@@ -139,7 +139,7 @@ export function Analytics({
   }
 
   return (
-    <div className={`w-full p-6 space-y-6 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`w-full px-4 sm:px-6 space-y-6 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>
@@ -258,9 +258,9 @@ export function Analytics({
                         </p>
                       </div>
                     </div>
-                    <div className={`rounded-full h-2 ${darkMode ? 'bg-slate-700/50' : 'bg-slate-200'}`}>
+                    <div className={`mt-2 rounded-full h-1 ${darkMode ? 'bg-slate-700/50' : 'bg-slate-200'}`}>
                       <div 
-                        className="h-2 rounded-full transition-all duration-500 bg-gradient-to-r from-emerald-500 to-teal-500"
+                        className="h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
@@ -296,9 +296,9 @@ export function Analytics({
                       {currency}{week.amount.toLocaleString()}
                     </span>
                   </div>
-                  <div className={`rounded-full h-3 ${darkMode ? 'bg-slate-700/50' : 'bg-slate-200'}`}>
+                  <div className={`mt-2 rounded-full h-1 ${darkMode ? 'bg-slate-700/50' : 'bg-slate-200'}`}>
                     <div 
-                      className="h-3 rounded-full transition-all duration-500 bg-gradient-to-r from-emerald-500 to-teal-500"
+                      className="h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
@@ -332,7 +332,7 @@ export function Analytics({
                 <p className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {currency}{amount.toLocaleString()}
                 </p>
-                <div className={`mt-2 rounded-full h-1 ${darkMode ? 'bg-slate-600' : 'bg-slate-200'}`}>
+                <div className={darkMode ? 'mt-2 rounded-full h-1 bg-slate-600' : 'mt-2 rounded-full h-1 bg-slate-200'}>
                   <div 
                     className="h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                     style={{ width: `${(amount / analytics.topSpendingDays[0][1]) * 100}%` }}
@@ -341,42 +341,6 @@ export function Analytics({
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Insights */}
-      <div className={`rounded-xl border shadow-lg p-6 md:p-8 ${cardClasses}`}>
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl p-3 shadow-lg">
-            <TrendingUp size={24} className="text-white" />
-          </div>
-          <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Financial Insights
-          </h3>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className={`p-6 rounded-xl ${darkMode ? 'bg-slate-700/30' : 'bg-slate-50'}`}>
-            <h4 className={`text-lg font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Spending Pattern
-            </h4>
-            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              {analytics.change >= 0 
-                ? `You've spent ${Math.abs(analytics.changePercent).toFixed(1)}% more than last month. Consider reviewing your budget.`
-                : `Great! You've reduced spending by ${Math.abs(analytics.changePercent).toFixed(1)}% this month. Keep it up!`
-              }
-            </p>
-          </div>
-          
-          <div className={`p-6 rounded-xl ${darkMode ? 'bg-slate-700/30' : 'bg-slate-50'}`}>
-            <h4 className={`text-lg font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Daily Average
-            </h4>
-            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Your daily average is {currency}{analytics.avgDaily.toFixed(2)}. 
-              {analytics.avgDaily > 1000 ? ' Consider setting a daily budget to control spending.' : ' You\'re maintaining good spending discipline!'}
-            </p>
-          </div>
         </div>
       </div>
     </div>

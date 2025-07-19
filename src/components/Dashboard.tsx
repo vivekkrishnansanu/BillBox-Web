@@ -77,7 +77,7 @@ export function Dashboard({
   }
 
   return (
-    <div className="w-full p-6 space-y-6 pb-12">
+    <div className="w-full px-4 sm:px-6 space-y-6 pb-12">
       {/* Header */}
       <div className="text-center">
         <h1 className={`text-xl sm:text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -94,7 +94,7 @@ export function Dashboard({
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div className={`rounded-lg shadow-sm border p-3 sm:p-4 ${
           darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
         }`}>

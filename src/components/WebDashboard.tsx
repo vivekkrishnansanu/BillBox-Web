@@ -151,7 +151,7 @@ export function WebDashboard({
 
   if (expenses.length === 0 && income.length === 0) {
     return (
-      <div className={`space-y-8 px-6 py-8 md:px-12 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
+      <div className={`space-y-8 px-4 md:px-12 py-8 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-8 text-white">
           <div className="max-w-2xl">
@@ -208,7 +208,7 @@ export function WebDashboard({
   }
 
   return (
-    <div className={`space-y-8 px-6 py-8 md:px-12 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
+    <div className={`space-y-8 px-4 md:px-12 py-8 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="relative bg-gradient-to-br from-emerald-500 via-emerald-400 to-teal-500 rounded-2xl p-7 shadow-2xl border-2 border-emerald-400 ring-2 ring-emerald-300/40 mb-2 animate-fade-in">

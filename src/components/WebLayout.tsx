@@ -228,7 +228,10 @@ export function WebLayout({
         </div>
       </aside>
       {/* Main Content */}
-      <div className="flex-1" style={{ marginLeft: sidebarCollapsed ? '5rem' : '18rem' }}>
+      <div
+        className="flex-1"
+        style={isMobile ? {} : { marginLeft: sidebarCollapsed ? '5rem' : '18rem' }}
+      >
         {/* Top Header */}
         <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm flex-shrink-0 fixed top-0 left-0 w-full z-50" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">
