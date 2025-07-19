@@ -218,10 +218,10 @@ export function FinancialPlanning({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             Financial Planning
           </h1>
-          <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}
           </p>
         </div>
@@ -245,7 +245,7 @@ export function FinancialPlanning({
                 <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   Monthly Income
                 </h3>
-                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   {currentIncome.incomeSource || 'Primary income source'}
                 </p>
               </div>
@@ -280,7 +280,7 @@ export function FinancialPlanning({
           
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 Primary Income
               </p>
               <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -288,7 +288,7 @@ export function FinancialPlanning({
               </p>
             </div>
             <div>
-              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 Extra Income
               </p>
               <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -298,7 +298,7 @@ export function FinancialPlanning({
           </div>
           
           <div className={`mt-4 pt-4 border-t ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Total Monthly Income
             </p>
             <p className={`text-2xl font-bold text-green-600`}>
@@ -312,7 +312,7 @@ export function FinancialPlanning({
           }`}>
             <div className="flex items-center space-x-2 mb-2">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <p className={`text-sm font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+              <p className={`text-base font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
                 Need to add more income?
               </p>
             </div>
@@ -348,7 +348,7 @@ export function FinancialPlanning({
         <div className="grid grid-cols-2 gap-4">
           <div className={`rounded-xl shadow-lg border p-4 ${baseClasses}`}>
             <div className="flex items-center justify-between mb-2">
-              <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h3 className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Monthly Expenses
               </h3>
               <ArrowDownCircle size={16} className="text-red-500" />
@@ -360,7 +360,7 @@ export function FinancialPlanning({
 
           <div className={`rounded-xl shadow-lg border p-4 ${baseClasses}`}>
             <div className="flex items-center justify-between mb-2">
-              <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h3 className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 EMI Burden
               </h3>
               <Calendar size={16} className="text-orange-500" />
@@ -375,7 +375,7 @@ export function FinancialPlanning({
 
           <div className={`rounded-xl shadow-lg border p-4 ${baseClasses}`}>
             <div className="flex items-center justify-between mb-2">
-              <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h3 className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Monthly Savings
               </h3>
               <Target size={16} className="text-purple-500" />
@@ -390,7 +390,7 @@ export function FinancialPlanning({
 
           <div className={`rounded-xl shadow-lg border p-4 ${baseClasses}`}>
             <div className="flex items-center justify-between mb-2">
-              <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h3 className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Available Balance
               </h3>
               <ArrowUpCircle size={16} className={monthlyStats.remainingAmount >= 0 ? 'text-green-500' : 'text-red-500'} />
@@ -406,7 +406,7 @@ export function FinancialPlanning({
 
           <div className={`rounded-xl shadow-lg border p-4 ${baseClasses}`}>
             <div className="flex items-center justify-between mb-2">
-              <h3 className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h3 className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Savings Rate
               </h3>
               <Target size={16} className="text-blue-500" />
@@ -427,7 +427,7 @@ export function FinancialPlanning({
                 {editingIncome ? 'Edit Income' : 'Add Monthly Income'}
               </h2>
               {editingIncome && (
-                <p className={`text-sm mt-1 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-base mt-1 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   Update your income amounts. You can increase or decrease any field.
                 </p>
               )}
@@ -435,7 +435,7 @@ export function FinancialPlanning({
             
             <div className="p-6 space-y-4">
               <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label className={`block text-base font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                   Primary Monthly Income *
                 </label>
                 <div className="relative">
@@ -452,14 +452,14 @@ export function FinancialPlanning({
                   />
                 </div>
                 {editingIncome && (
-                  <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-base mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Current: ₹{editingIncome.monthlyIncome.toLocaleString()}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label className={`block text-base font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                   Extra Income (Bonuses, Freelance, etc.)
                 </label>
                 <div className="relative">
@@ -475,14 +475,14 @@ export function FinancialPlanning({
                   />
                 </div>
                 {editingIncome && (
-                  <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-base mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Current: ₹{editingIncome.extraIncome.toLocaleString()}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label className={`block text-base font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                   Income Source
                 </label>
                 <input
@@ -500,7 +500,7 @@ export function FinancialPlanning({
                 }`}>
                   <div className="flex items-center space-x-2 mb-1">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <p className={`text-sm font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+                    <p className={`text-base font-medium ${darkMode ? 'text-blue-300' : 'text-blue-700'}`}>
                       Total Income Preview
                     </p>
                   </div>

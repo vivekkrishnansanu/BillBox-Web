@@ -316,10 +316,10 @@ export function SavingsTracker({
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               Savings & Investments
             </h1>
-            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Track your savings goals and investments
             </p>
           </div>
@@ -338,7 +338,7 @@ export function SavingsTracker({
               <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-2 shadow-lg">
                 <DollarSign size={16} className="text-white" />
               </div>
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Total Saved
               </span>
             </div>
@@ -352,7 +352,7 @@ export function SavingsTracker({
               <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-2 shadow-lg">
                 <Calendar size={16} className="text-white" />
               </div>
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Monthly SIP
               </span>
             </div>
@@ -366,7 +366,7 @@ export function SavingsTracker({
               <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-2 shadow-lg">
                 <TrendingUp size={16} className="text-white" />
               </div>
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Expected Returns
               </span>
             </div>
@@ -380,7 +380,7 @@ export function SavingsTracker({
               <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-2 shadow-lg">
                 <Target size={16} className="text-white" />
               </div>
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 Active Goals
               </span>
             </div>
@@ -414,7 +414,7 @@ export function SavingsTracker({
                         <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {savings.name}
                         </p>
-                        <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                           Matures: {new Date(savings.maturityDate!).toLocaleDateString()}
                         </p>
                       </div>
@@ -468,7 +468,7 @@ export function SavingsTracker({
                         <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {savingsItem.name}
                         </h4>
-                        <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                           {getTypeName(savingsItem.type)}
                         </p>
                         {savingsItem.purpose && (
@@ -547,7 +547,7 @@ export function SavingsTracker({
               <div className="grid grid-cols-4 gap-4 mb-6">
                 {/* Savings Type */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     Savings Type *
                   </label>
                   <select
@@ -564,7 +564,7 @@ export function SavingsTracker({
 
                 {/* Name */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     Name *
                   </label>
                   <input
@@ -579,7 +579,7 @@ export function SavingsTracker({
 
                 {/* Amount/Investment */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     {type === 'fd' || type === 'custom' ? 'Amount' : 
                      type === 'rd' ? 'Monthly Deposit' : 'Monthly Investment'} *
                   </label>
@@ -604,7 +604,7 @@ export function SavingsTracker({
 
                 {/* Rate/Return */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     {type === 'sip' ? 'Expected Return (%)' : 'Interest Rate (%)'} *
                   </label>
                   <input
@@ -626,7 +626,7 @@ export function SavingsTracker({
               <div className="grid grid-cols-4 gap-4 mb-6">
                 {/* Period/Tenure/Duration */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     {type === 'fd' ? 'Maturity Period (Months)' : 
                      type === 'rd' ? 'Tenure (Months)' : 
                      type === 'sip' ? 'Duration (Months)' : 'Period (Months)'} *
@@ -651,7 +651,7 @@ export function SavingsTracker({
 
                 {/* Fund Name (SIP only) */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     {type === 'sip' ? 'Fund Name *' : 'Purpose'}
                   </label>
                   <input
@@ -669,7 +669,7 @@ export function SavingsTracker({
 
                 {/* Frequency (Custom only) */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-base font-medium text-gray-700">
                     {type === 'custom' ? 'Frequency' : 'Start Date *'}
                   </label>
                   {type === 'custom' ? (

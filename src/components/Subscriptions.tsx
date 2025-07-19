@@ -196,10 +196,10 @@ export function Subscriptions({
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               Subscriptions
             </h1>
-            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Manage your recurring subscriptions
             </p>
           </div>
@@ -270,7 +270,7 @@ export function Subscriptions({
                           <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                             {subscription.name}
                           </p>
-                          <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             {daysUntil === 0 ? 'Renews today' : `Renews in ${daysUntil} days`}
                           </p>
                         </div>
@@ -329,7 +329,7 @@ export function Subscriptions({
                           <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                             {subscription.name}
                           </h4>
-                          <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                             {categoryInfo?.name} • {subscription.frequency}
                           </p>
                           {subscription.description && (

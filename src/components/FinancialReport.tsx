@@ -73,10 +73,10 @@ export function FinancialReport({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             Monthly Financial Report
           </h1>
-          <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {report.month} {report.year}
           </p>
         </div>
@@ -115,7 +115,7 @@ export function FinancialReport({
               <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Financial Health Overview
               </h2>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getHealthColor(report.summary.financialHealth)}`}>
+              <span className={`px-3 py-1 rounded-full text-base font-medium ${getHealthColor(report.summary.financialHealth)}`}>
                 {report.summary.financialHealth.toUpperCase()}
               </span>
             </div>
@@ -125,7 +125,7 @@ export function FinancialReport({
                 <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {formatAmount(report.income.total)}
                 </p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Total Income
                 </p>
               </div>
@@ -133,7 +133,7 @@ export function FinancialReport({
                 <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {formatAmount(report.expenses.total)}
                 </p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Total Expenses
                 </p>
               </div>
@@ -141,7 +141,7 @@ export function FinancialReport({
                 <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {formatAmount(report.emis.totalMonthly)}
                 </p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Monthly EMI
                 </p>
               </div>
@@ -151,7 +151,7 @@ export function FinancialReport({
                 }`}>
                   {formatAmount(report.forecast.availableBalance)}
                 </p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Available Balance
                 </p>
               </div>
@@ -171,26 +171,26 @@ export function FinancialReport({
             
             <div className="grid grid-cols-1 gap-3">
               <div className="flex justify-between items-center">
-                <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Primary Income
                 </span>
-                <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {formatAmount(report.income.primary)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Extra Income
                 </span>
-                <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {formatAmount(report.income.extra)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Source
                 </span>
-                <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {report.income.source || 'Not specified'}
                 </span>
               </div>
@@ -210,36 +210,36 @@ export function FinancialReport({
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Savings Rate
                 </p>
-                <p className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {report.forecast.savingsRate.toFixed(1)}%
                 </p>
               </div>
               <div>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   EMI to Income Ratio
                 </p>
-                <p className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {report.forecast.emiToIncomeRatio.toFixed(1)}%
                 </p>
               </div>
               <div>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Available Balance
                 </p>
-                <p className={`text-lg font-bold ${
+                <p className={`text-xl font-bold ${
                   report.forecast.availableBalance >= 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {formatAmount(report.forecast.availableBalance)}
                 </p>
               </div>
               <div>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   Next Month Projection
                 </p>
-                <p className={`text-lg font-bold ${
+                <p className={`text-xl font-bold ${
                   report.forecast.nextMonthProjection >= 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {formatAmount(report.forecast.nextMonthProjection)}
@@ -265,26 +265,26 @@ export function FinancialReport({
               
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Active EMIs
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {report.emis.active}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Monthly EMI
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {formatAmount(report.emis.totalMonthly)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Total Remaining
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {formatAmount(report.emis.totalRemaining)}
                   </span>
                 </div>
@@ -306,26 +306,26 @@ export function FinancialReport({
               
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Total Saved
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {formatAmount(report.savings.totalSaved)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Monthly Contribution
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {formatAmount(report.savings.monthlyContribution)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     Active Savings
                   </span>
-                  <span className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {report.savings.activeSavings}
                   </span>
                 </div>
@@ -344,10 +344,10 @@ export function FinancialReport({
                   <div key={index} className={`flex items-start space-x-3 p-3 rounded-lg ${
                     darkMode ? 'bg-yellow-900/20 border-yellow-700' : 'bg-yellow-50 border-yellow-200'
                   } border`}>
-                    <span className="text-yellow-600 font-bold text-sm">
+                    <span className="text-yellow-600 font-bold text-base">
                       {index + 1}.
                     </span>
-                    <p className={`text-sm ${darkMode ? 'text-yellow-200' : 'text-yellow-800'}`}>
+                    <p className={`text-base ${darkMode ? 'text-yellow-200' : 'text-yellow-800'}`}>
                       {recommendation}
                     </p>
                   </div>

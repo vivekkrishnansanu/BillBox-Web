@@ -250,10 +250,10 @@ export function EMIManager({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             EMI Manager
           </h1>
-          <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Track and manage your loan EMIs
           </p>
         </div>
@@ -277,7 +277,7 @@ export function EMIManager({
           <p className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             {emiStats.activeEMIs.length}
           </p>
-          <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             {currency}{emiStats.totalActiveEMI.toLocaleString()}/month
           </p>
         </div>
@@ -362,7 +362,7 @@ export function EMIManager({
                         <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {emi.name}
                         </h4>
-                        <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                           {categoryInfo.name}
                         </p>
                       </div>
@@ -373,7 +373,7 @@ export function EMIManager({
                         <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {currency}{emi.monthlyAmount.toLocaleString()}/month
                         </p>
-                        <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                           {emi.tenure} months
                         </p>
                       </div>
@@ -404,7 +404,7 @@ export function EMIManager({
                   </div>
                   
                   <div className={`mt-3 pt-3 border-t ${darkMode ? 'border-slate-600' : 'border-slate-200'}`}>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-base">
                       <span className={darkMode ? 'text-gray-400' : 'text-gray-500'}>
                         Start: {new Date(emi.startMonth + '-01').toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                       </span>
@@ -438,7 +438,7 @@ export function EMIManager({
                   <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {new Date(forecast.month + '-01').toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                   </p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     {forecast.activeEMIs} active EMIs
                   </p>
                 </div>
@@ -448,7 +448,7 @@ export function EMIManager({
                   }`}>
                     {currency}{forecast.savings.toLocaleString()}
                   </p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     EMI: {currency}{forecast.totalEMIAmount.toLocaleString()}
                   </p>
                 </div>
@@ -562,7 +562,7 @@ export function EMIManager({
               {/* Total Amount Preview */}
               {monthlyAmount && tenure && (
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-base text-gray-600">
                     Total EMI Amount: <span className="font-semibold text-gray-900">
                       {currency}{(parseFloat(monthlyAmount) * parseInt(tenure)).toLocaleString()}
                     </span>

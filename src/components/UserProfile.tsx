@@ -89,10 +89,10 @@ export function UserProfile({ user, onSignOut, darkMode = false }: UserProfilePr
             </div>
             
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-xl sm:text-3xl font-bold text-white mb-2">
                 {user.displayName}
               </h1>
-              <p className="text-emerald-100 mb-3">
+              <p className="text-base text-emerald-100 mb-3">
                 {user.email}
               </p>
               <div className="flex items-center space-x-3">

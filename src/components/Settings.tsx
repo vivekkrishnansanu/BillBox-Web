@@ -100,7 +100,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
   return (
     <div className="p-6 space-y-6 pb-12 bg-gray-50 text-gray-900">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
           {t('settings')}
         </h1>
         {userProfile && (
@@ -112,7 +112,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
                 className="w-8 h-8 rounded-full"
               />
             )}
-            <span className="text-sm text-gray-600">{userProfile.displayName}</span>
+            <span className="text-base text-gray-600">{userProfile.displayName}</span>
           </div>
         )}
       </div>
@@ -132,7 +132,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
               )}
               <div>
                 <p className="font-medium text-gray-900">{userProfile.displayName}</p>
-                <p className="text-sm text-gray-600">{userProfile.email}</p>
+                <p className="text-base text-gray-600">{userProfile.email}</p>
               </div>
             </div>
             <button
@@ -167,7 +167,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
             <span className="text-gray-600">₹ (Indian Rupee Only)</span>
             <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">Fixed</span>
           </div>
-          <p className="text-xs mt-1 text-gray-500">
+          <p className="text-base mt-1 text-gray-500">
             BillBox is designed specifically for Indian users
           </p>
         </div>
@@ -192,7 +192,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
               />
             </button>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600">
             Enable AI-powered category prediction and spending insights
           </p>
         </div>
@@ -212,7 +212,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
               max="30"
               className="w-16 px-2 py-1 border rounded text-center border-gray-300 bg-white text-gray-900"
             />
-            <span className="text-gray-600">{t('daysBefore')}</span>
+            <span className="text-base text-gray-600">{t('daysBefore')}</span>
           </div>
         </div>
 
@@ -239,7 +239,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
                 className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
               />
               <Bell size={16} className="text-gray-600" />
-              <span className="text-sm">In-App Notifications</span>
+              <span className="text-base">In-App Notifications</span>
             </label>
             
             <label className="flex items-center space-x-3">
@@ -257,7 +257,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
                 className="w-4 h-4 text-green-600 rounded focus:ring-green-500"
               />
               <MessageCircle size={16} className="text-green-600" />
-              <span className="text-sm">WhatsApp Reminders</span>
+              <span className="text-base">WhatsApp Reminders</span>
             </label>
             
             <label className="flex items-center space-x-3">
@@ -275,7 +275,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
                 className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
               <Smartphone size={16} className="text-blue-600" />
-              <span className="text-sm">SMS Reminders</span>
+              <span className="text-base">SMS Reminders</span>
             </label>
           </div>
         </div>
@@ -376,7 +376,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
           <Shield size={20} className="text-red-600" />
           <span className="font-medium text-red-700">Danger Zone</span>
         </div>
-        <p className="text-sm text-red-600 mb-4">This will permanently delete all your data and reset your account. This action cannot be undone.</p>
+        <p className="text-base text-red-600 mb-4">This will permanently delete all your data and reset your account. This action cannot be undone.</p>
         <button
           onClick={() => setShowResetModal(true)}
           className="px-5 py-2 bg-red-600 text-white rounded-lg font-semibold shadow hover:bg-red-700 transition-colors"
@@ -390,7 +390,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full border border-red-200">
             <h2 className="text-xl font-bold text-red-700 mb-3">Confirm Data Reset</h2>
-            <p className="text-gray-700 mb-6">Are you sure you want to <span className='text-red-600 font-semibold'>reset all your data</span>? This action cannot be undone and will permanently delete all your account data.</p>
+            <p className="text-base text-gray-700 mb-6">Are you sure you want to <span className='text-red-600 font-semibold'>reset all your data</span>? This action cannot be undone and will permanently delete all your account data.</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowResetModal(false)}
@@ -412,7 +412,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
       {/* App Info */}
       <div className="rounded-xl p-6 text-center bg-gray-50">
         <h3 className="text-lg font-semibold mb-2 text-gray-900">BillBox</h3>
-        <p className="text-sm text-gray-600">
+        <p className="text-base text-gray-600">
           Smart Daily Expense & Bill Tracker
         </p>
         <p className="text-xs mt-2 text-gray-500">
