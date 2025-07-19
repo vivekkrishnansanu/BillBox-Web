@@ -17,7 +17,8 @@ import {
   Folder,
   Layers,
   ListChecks,
-  DollarSign
+  DollarSign,
+  MessageCircle
 } from 'lucide-react';
 import { Income } from '../types';
 
@@ -100,7 +101,7 @@ export function WebLayout({
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex bg-gray-50">
       {/* Sidebar (desktop only) */}
       <aside className={`hidden md:flex flex-col bg-white border-r border-gray-200 h-screen transition-all duration-200 ${sidebarCollapsed ? 'w-20' : 'w-72'} ${isMobile ? 'hidden' : ''}`}>
         {/* Header */}
@@ -227,9 +228,9 @@ export function WebLayout({
         </div>
       </aside>
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm flex-shrink-0 fixed top-0 left-0 w-full z-50" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 capitalize">
@@ -275,103 +276,164 @@ export function WebLayout({
           </div>
         </header>
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 pb-16 md:pb-0 px-4 sm:px-6 md:px-8 lg:px-16 pt-4 sm:pt-6 md:pt-8">
+        <main className={`flex-1 overflow-y-auto bg-gray-50 px-4 sm:px-6 md:px-8 lg:px-16 pt-4 sm:pt-6 md:pt-8 mt-[81px] ${isMobile ? 'text-base' : ''}`} style={{ paddingBottom: isMobile ? '7rem' : '1.5rem' }}>
           {children}
         </main>
         {/* Bottom Navigation (mobile only) */}
         {isMobile && (
-          <nav className="fixed bottom-4 left-0 w-full flex justify-center items-end z-50 pointer-events-none md:hidden">
-            <div className="pointer-events-auto flex gap-2 px-4 py-3 rounded-3xl bg-slate-900/90 border-2 border-emerald-500/60 shadow-2xl backdrop-blur-2xl mb-3" style={{ minHeight: 72, maxWidth: 440 }}>
+          <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 md:hidden">
+            <div className="flex items-center justify-between px-1 py-6">
               {/* Dashboard */}
               <button
                 onClick={() => { setShowPlansMenu(false); setShowRecordsMenu(false); onTabChange('dashboard'); }}
-                className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${activeTab === 'dashboard' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                style={{ minWidth: 44 }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  activeTab === 'dashboard' 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
               >
-                <Home size={26} />
+                <Home size={18} className="mb-0.5" />
+                <span className="text-xs font-medium">Dashboard</span>
+                {activeTab === 'dashboard' && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
+                )}
               </button>
+
               {/* Analytics */}
               <button
                 onClick={() => { setShowPlansMenu(false); setShowRecordsMenu(false); onTabChange('analytics'); }}
-                className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${activeTab === 'analytics' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                style={{ minWidth: 44 }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  activeTab === 'analytics' 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
               >
-                <BarChart3 size={26} />
-              </button>
-              {/* Plans group: Subscriptions, Savings, EMI */}
-              <div className="relative">
-                <button
-                  ref={plansBtnRef}
-                  onClick={() => { setShowPlansMenu(v => !v); setShowRecordsMenu(false); }}
-                  className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${['subscriptions','savings','emi'].includes(activeTab) ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                  style={{ minWidth: 44 }}
-                >
-                  <Layers size={26} />
-                  <span className="text-xs mt-1 font-medium">Plans</span>
-                </button>
-                {showPlansMenu && (
-                  <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-                    <div className="relative flex flex-col items-center">
-                      {/* Arrow */}
-                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 overflow-hidden">
-                        <div className="w-4 h-4 bg-slate-900/90 border-l border-t border-slate-700 rotate-45 mx-auto shadow-lg"></div>
-                      </div>
-                      <div className="bg-slate-900/90 border border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 min-w-[160px] flex flex-col gap-2">
-                        <button onClick={() => { setShowPlansMenu(false); onTabChange('subscriptions'); }} className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 text-slate-100 text-base transition-all"><RotateCcw size={22} />Subscriptions</button>
-                        <button onClick={() => { setShowPlansMenu(false); onTabChange('savings'); }} className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 text-slate-100 text-base transition-all"><PiggyBank size={22} />Savings</button>
-                        <button onClick={() => { setShowPlansMenu(false); onTabChange('emi'); }} className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 text-slate-100 text-base transition-all"><CreditCard size={22} />EMI</button>
-                      </div>
-                    </div>
-                  </div>
+                <BarChart3 size={18} className="mb-0.5" />
+                <span className="text-xs font-medium">Analytics</span>
+                {activeTab === 'analytics' && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
                 )}
-              </div>
+              </button>
+
               {/* Income */}
               <button
                 onClick={() => { setShowPlansMenu(false); setShowRecordsMenu(false); onTabChange('income'); }}
-                className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${activeTab === 'income' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                style={{ minWidth: 44 }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  activeTab === 'income' 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
               >
-                <DollarSign size={26} />
-              </button>
-              {/* Records group: Transactions, Report */}
-              <div className="relative">
-                <button
-                  ref={recordsBtnRef}
-                  onClick={() => { setShowRecordsMenu(v => !v); setShowPlansMenu(false); }}
-                  className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${['history','report'].includes(activeTab) ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                  style={{ minWidth: 44 }}
-                >
-                  <ListChecks size={26} />
-                  <span className="text-xs mt-1 font-medium">Records</span>
-                </button>
-                {showRecordsMenu && (
-                  <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-                    <div className="relative flex flex-col items-center">
-                      {/* Arrow */}
-                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 overflow-hidden">
-                        <div className="w-4 h-4 bg-slate-900/90 border-l border-t border-slate-700 rotate-45 mx-auto shadow-lg"></div>
-                      </div>
-                      <div className="bg-slate-900/90 border border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl p-2 min-w-[160px] flex flex-col gap-2">
-                        <button onClick={() => { setShowRecordsMenu(false); onTabChange('history'); }} className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 text-slate-100 text-base transition-all"><FileText size={22} />Transactions</button>
-                        <button onClick={() => { setShowRecordsMenu(false); onTabChange('report'); }} className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-slate-800 text-slate-100 text-base transition-all"><BarChart3 size={22} />Report</button>
-                      </div>
-                    </div>
-                  </div>
+                <DollarSign size={18} className="mb-0.5" />
+                <span className="text-xs font-medium">Income</span>
+                {activeTab === 'income' && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
                 )}
-              </div>
-              {/* Profile icon at the end */}
+              </button>
+
+              {/* Plans */}
+              <button
+                onClick={() => { setShowPlansMenu(v => !v); setShowRecordsMenu(false); }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  ['subscriptions','savings','emi'].includes(activeTab) 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
+              >
+                <Layers size={18} className="mb-0.5" />
+                <span className="text-xs font-medium">Plans</span>
+                {['subscriptions','savings','emi'].includes(activeTab) && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
+                )}
+              </button>
+
+              {/* Records */}
+              <button
+                onClick={() => { setShowRecordsMenu(v => !v); setShowPlansMenu(false); }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  ['history','report'].includes(activeTab) 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
+              >
+                <MessageCircle size={18} className="mb-0.5" />
+                <span className="text-xs font-medium">Records</span>
+                {['history','report'].includes(activeTab) && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
+                )}
+              </button>
+
+              {/* Profile */}
               <button
                 onClick={() => { setShowPlansMenu(false); setShowRecordsMenu(false); onTabChange('profile'); }}
-                className={`flex flex-col items-center justify-center px-3 py-2 rounded-xl transition-all duration-150 ${activeTab === 'profile' ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:text-emerald-300'}`}
-                style={{ minWidth: 44 }}
+                className={`flex flex-col items-center justify-center py-1.5 px-2 transition-all duration-200 flex-1 relative ${
+                  activeTab === 'profile' 
+                    ? 'text-emerald-600' 
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
               >
                 {user && user.photoURL ? (
-                  <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full object-cover border-2 border-emerald-400" />
+                  <img src={user.photoURL} alt="Profile" className="w-4 h-4 rounded-full object-cover border border-emerald-400 mb-0.5" />
                 ) : (
-                  <User size={26} />
+                  <User size={18} className="mb-0.5" />
+                )}
+                <span className="text-xs font-medium">Profile</span>
+                {activeTab === 'profile' && (
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full"></div>
                 )}
               </button>
             </div>
+
+            {/* Plans Dropdown */}
+            {showPlansMenu && (
+              <div className="absolute bottom-full left-0 w-full bg-white border-t border-gray-200 shadow-lg">
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => { setShowPlansMenu(false); onTabChange('subscriptions'); }}
+                    className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                  >
+                    <RotateCcw size={18} className="text-emerald-600" />
+                    <span className="text-sm font-medium">Subscriptions</span>
+                  </button>
+                  <button 
+                    onClick={() => { setShowPlansMenu(false); onTabChange('savings'); }}
+                    className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                  >
+                    <PiggyBank size={18} className="text-emerald-600" />
+                    <span className="text-sm font-medium">Savings</span>
+                  </button>
+                  <button 
+                    onClick={() => { setShowPlansMenu(false); onTabChange('emi'); }}
+                    className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                  >
+                    <CreditCard size={18} className="text-emerald-600" />
+                    <span className="text-sm font-medium">EMI Manager</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Records Dropdown */}
+            {showRecordsMenu && (
+              <div className="absolute bottom-full left-0 w-full bg-white border-t border-gray-200 shadow-lg">
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => { setShowRecordsMenu(false); onTabChange('history'); }}
+                    className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                  >
+                    <FileText size={18} className="text-emerald-600" />
+                    <span className="text-sm font-medium">Transactions</span>
+                  </button>
+                  <button 
+                    onClick={() => { setShowRecordsMenu(false); onTabChange('report'); }}
+                    className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-50 text-left transition-colors"
+                  >
+                    <BarChart3 size={18} className="text-emerald-600" />
+                    <span className="text-sm font-medium">Reports</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </nav>
         )}
       </div>

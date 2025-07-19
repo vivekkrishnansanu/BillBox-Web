@@ -61,7 +61,7 @@ export function UserProfile({ user, onSignOut, darkMode = false }: UserProfilePr
     : 'bg-white border-slate-300 text-gray-900 placeholder-slate-500 focus:border-emerald-500';
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-12">
       {/* Profile Header Card */}
       <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>

@@ -98,7 +98,7 @@ export function Settings({ settings, onUpdateSettings, userProfile, onSignOut, o
   }, [showResetModal]);
 
   return (
-    <div className="p-6 space-y-6 min-h-screen bg-gray-50 text-gray-900">
+    <div className="p-6 space-y-6 pb-12 bg-gray-50 text-gray-900">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">
           {t('settings')}

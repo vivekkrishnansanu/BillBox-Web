@@ -111,7 +111,7 @@ export function CredLikeDashboard({
   if (expenses.length === 0 && income.length === 0) {
     return (
       <div className={baseClasses}>
-        <div className="px-6 pt-12 pb-24">
+        <div className="px-6 pt-12">
           {/* Welcome Header */}
           <div className="text-center mb-8">
             <div className="w-24 h-24 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl">
@@ -178,7 +178,7 @@ export function CredLikeDashboard({
 
   return (
     <div className={baseClasses}>
-      <div className="px-6 pt-8 pb-24 space-y-6">
+              <div className="px-6 pt-8 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

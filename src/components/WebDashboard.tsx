@@ -39,6 +39,7 @@ export function WebDashboard({
 }: WebDashboardProps) {
   const [showExpenseInfo, setShowExpenseInfo] = useState(false);
   const infoBtnRef = useRef<HTMLButtonElement>(null);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 640);
 
   // Close popover on outside click or Escape
   useEffect(() => {
@@ -63,6 +64,15 @@ export function WebDashboard({
       document.removeEventListener('keydown', handle);
     };
   }, [showExpenseInfo]);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 640);
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const stats = useMemo(() => {
     if (resetFlag) {
@@ -141,12 +151,12 @@ export function WebDashboard({
 
   if (expenses.length === 0 && income.length === 0) {
     return (
-      <div className="space-y-8 px-6 py-8 md:px-12 md:py-10">
+      <div className={`space-y-8 px-6 py-8 md:px-12 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-8 text-white">
           <div className="max-w-2xl">
-            <h1 className="text-3xl font-bold mb-4">Welcome to BillBox</h1>
-            <p className="text-emerald-100 text-lg mb-6">
+            <h1 className="text-xl sm:text-3xl font-bold mb-4">Welcome to BillBox</h1>
+            <p className="text-emerald-100 text-base mb-6">
               Your comprehensive financial management platform. Track expenses, manage subscriptions, 
               monitor investments, and get AI-powered insights to make better financial decisions.
             </p>
@@ -198,7 +208,7 @@ export function WebDashboard({
   }
 
   return (
-    <div className="space-y-8 px-6 py-8 md:px-12 md:py-10">
+    <div className={`space-y-8 px-6 py-8 md:px-12 md:py-10 ${isMobile ? 'pb-[100rem]' : 'pb-12'}`}>
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="relative bg-gradient-to-br from-emerald-500 via-emerald-400 to-teal-500 rounded-2xl p-7 shadow-2xl border-2 border-emerald-400 ring-2 ring-emerald-300/40 mb-2 animate-fade-in">

@@ -60,7 +60,7 @@ export function Dashboard({
 
   if (expenses.length === 0) {
     return (
-      <div className={`p-4 sm:p-6 text-center min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className={`p-4 sm:p-6 text-center ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className={`rounded-full w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mx-auto mb-4 ${
           darkMode ? 'bg-green-900/30' : 'bg-green-50'
         }`}>
@@ -77,7 +77,7 @@ export function Dashboard({
   }
 
   return (
-    <div className={`p-4 sm:p-6 space-y-4 sm:space-y-6 min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`p-4 sm:p-6 space-y-4 sm:space-y-6 pb-80 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className="text-center">
         <h1 className={`text-xl sm:text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -157,7 +157,7 @@ export function Dashboard({
       <AIInsights insights={stats.aiInsights} darkMode={darkMode} />
 
       {/* Upcoming Bills */}
-      <div className={`rounded-lg shadow-sm border p-3 sm:p-4 ${
+      <div className={`rounded-lg shadow-sm border p-3 sm:p-4 mb-8 ${
         darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
       }`}>
         <div className="flex items-center justify-between mb-3 sm:mb-4">

@@ -125,7 +125,7 @@ export function Analytics({
         <h2 className={`text-xl sm:text-2xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
           No Data to Analyze
         </h2>
-        <p className={`mb-6 text-sm sm:text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`mb-6 text-base sm:text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
           Start adding expenses to see analytics and insights
         </p>
         <button 
@@ -139,7 +139,7 @@ export function Analytics({
   }
 
   return (
-    <div className={baseClasses + ' px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-10 space-y-6 sm:space-y-8'}>
+    <div className={baseClasses + ' px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-10 space-y-6 sm:space-y-8 pb-12'}>
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>
@@ -160,7 +160,7 @@ export function Analytics({
             analytics.change >= 0 ? 'text-red-500' : 'text-green-500'
           }`}>
             {analytics.change >= 0 ? <ArrowUpRight size={10} className="sm:w-3 sm:h-3" /> : <ArrowDownRight size={10} className="sm:w-3 sm:h-3" />}
-            <span className="text-xs font-medium">
+            <span className="text-base font-medium">
               {Math.abs(analytics.changePercent).toFixed(1)}% vs last month
             </span>
           </div>
@@ -180,7 +180,7 @@ export function Analytics({
               </p>
             </div>
           </div>
-          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             Based on {new Date().getDate()} days
           </p>
         </div>
@@ -199,7 +199,7 @@ export function Analytics({
               </p>
             </div>
           </div>
-          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             {analytics.topSpendingDays.length > 0 ? `${currency}${analytics.topSpendingDays[0][1].toLocaleString()}` : 'No data'}
           </p>
         </div>
@@ -218,7 +218,7 @@ export function Analytics({
               </p>
             </div>
           </div>
-          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             Active spending categories
           </p>
         </div>
@@ -253,7 +253,7 @@ export function Analytics({
                         <p className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                           {currency}{amount.toLocaleString()}
                         </p>
-                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                           {percentage.toFixed(1)}%
                         </p>
                       </div>
@@ -360,7 +360,7 @@ export function Analytics({
             <h4 className={`text-lg font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               Spending Pattern
             </h4>
-            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               {analytics.change >= 0 
                 ? `You've spent ${Math.abs(analytics.changePercent).toFixed(1)}% more than last month. Consider reviewing your budget.`
                 : `Great! You've reduced spending by ${Math.abs(analytics.changePercent).toFixed(1)}% this month. Keep it up!`
@@ -372,7 +372,7 @@ export function Analytics({
             <h4 className={`text-lg font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               Daily Average
             </h4>
-            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Your daily average is {currency}{analytics.avgDaily.toFixed(2)}. 
               {analytics.avgDaily > 1000 ? ' Consider setting a daily budget to control spending.' : ' You\'re maintaining good spending discipline!'}
             </p>

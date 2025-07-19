@@ -192,7 +192,7 @@ export function Subscriptions({
 
   return (
     <div className={`min-h-screen ${baseClasses}`}>
-      <div className="px-6 pt-8 pb-24 space-y-6">
+      <div className="px-6 pt-8 space-y-6 pb-12">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

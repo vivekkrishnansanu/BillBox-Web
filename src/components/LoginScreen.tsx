@@ -77,34 +77,34 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
       </div>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-sm sm:max-w-md relative z-10">
         {/* Logo and Title - Show in both modes */}
-        <div className="text-center mb-6">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-4 shadow-2xl animate-float">
-            <TrendingUp size={32} className="sm:w-10 sm:h-10 text-white" />
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl animate-float">
+            <TrendingUp size={28} className="sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
             BillBox
           </h1>
-          <p className="text-sm sm:text-base text-gray-300">Your Smart Financial Companion</p>
+          <p className="text-xs sm:text-sm md:text-base text-gray-300">Your Smart Financial Companion</p>
         </div>
 
         {/* Auth Form */}
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
-          <div className="text-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+        <div className="bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-white/20">
+          <div className="text-center mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
               {isLogin ? 'Welcome Back' : 'Get Started'}
             </h2>
-            <p className="text-sm sm:text-base text-gray-600">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600">
               {isLogin ? 'Sign in to your account' : 'Create your account to start tracking'}
             </p>
           </div>
 
           {/* Success Message */}
           {success && (
-            <div className="bg-green-50 border border-green-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 mb-6">
+            <div className="bg-green-50 border border-green-200 rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 mb-4 sm:mb-6">
               <div className="flex items-center space-x-2">
-                <CheckCircle size={18} className="sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                <CheckCircle size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0" />
                 <p className="text-green-800 text-xs sm:text-sm">{success}</p>
               </div>
             </div>
@@ -112,29 +112,29 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 mb-4 sm:mb-6">
               <div className="flex items-center space-x-2">
-                <AlertCircle size={18} className="sm:w-5 sm:h-5 text-red-600 flex-shrink-0" />
+                <AlertCircle size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 text-red-600 flex-shrink-0" />
                 <p className="text-red-800 text-xs sm:text-sm">{error}</p>
               </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             {/* Full Name (Sign Up Only) */}
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
                   Full Name
                 </label>
                 <div className="relative">
-                  <User size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <User size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
+                    className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                     required={!isLogin}
                   />
                 </div>
@@ -143,17 +143,17 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <Mail size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Mail size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                   required
                 />
               </div>
@@ -161,17 +161,17 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Lock size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={isLogin ? "Enter your password" : "Create a password (min 6 characters)"}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                   required
                   minLength={6}
                 />
@@ -181,17 +181,17 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             {/* Confirm Password (Sign Up Only) */}
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <Lock size={18} className="sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Lock size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                   <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
+                    className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-sm sm:text-base"
                     required={!isLogin}
                     minLength={6}
                   />
@@ -203,25 +203,25 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base"
             >
               {isLoading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 border-b-2 border-white"></div>
                   <span>{isLogin ? 'Signing In...' : 'Creating Account...'}</span>
                 </>
               ) : (
                 <>
                   <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
-                  <ArrowRight size={18} className="sm:w-5 sm:h-5" />
+                  <ArrowRight size={16} className="sm:w-4 sm:h-4 md:w-5 md:h-5" />
                 </>
               )}
             </button>
           </form>
 
           {/* Toggle Mode */}
-          <div className="mt-6 text-center">
-            <p className="text-sm sm:text-base text-gray-600">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button
                 onClick={toggleMode}
@@ -233,7 +233,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           </div>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-gray-400 mt-4 sm:mt-6">
           Secure authentication powered by Supabase
         </p>
       </div>

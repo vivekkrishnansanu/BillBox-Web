@@ -100,11 +100,11 @@ export function MyIncome({
   const totalIncome = (parseFloat(primaryIncome) || 0) + (parseFloat(extraIncome) || 0);
 
   return (
-    <div className="p-4 sm:p-6 bg-gray-50">
+    <div className="p-4 sm:p-6 bg-gray-50 pb-12">
       {/* Header */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">My Income</h1>
-        <p className="text-gray-600 text-sm mt-1">Manage your monthly income sources</p>
+        <p className="text-gray-600 text-base mt-1">Manage your monthly income sources</p>
       </div>
 
       {/* Income Overview Cards */}
@@ -116,8 +116,8 @@ export function MyIncome({
               <Calendar size={14} className="sm:w-4 sm:h-4 text-blue-600" />
             </div>
             <div>
-              <h3 className="text-xs sm:text-sm font-medium text-gray-900">Primary Income</h3>
-              <p className="text-xs text-gray-500">Monthly salary</p>
+              <h3 className="text-base sm:text-sm font-medium text-gray-900">Primary Income</h3>
+              <p className="text-base text-gray-500">Monthly salary</p>
             </div>
           </div>
           <p className="text-lg sm:text-xl font-bold text-gray-900">
@@ -132,8 +132,8 @@ export function MyIncome({
               <Plus size={14} className="sm:w-4 sm:h-4 text-purple-600" />
             </div>
             <div>
-              <h3 className="text-xs sm:text-sm font-medium text-gray-900">Extra Income</h3>
-              <p className="text-xs text-gray-500">Freelance, bonuses</p>
+              <h3 className="text-base sm:text-sm font-medium text-gray-900">Extra Income</h3>
+              <p className="text-base text-gray-500">Freelance, bonuses</p>
             </div>
           </div>
           <p className="text-lg sm:text-xl font-bold text-gray-900">
@@ -148,8 +148,8 @@ export function MyIncome({
               <DollarSign size={14} className="sm:w-4 sm:h-4 text-green-600" />
             </div>
             <div>
-              <h3 className="text-xs sm:text-sm font-medium text-gray-900">Total Income</h3>
-              <p className="text-xs text-gray-500">This month</p>
+              <h3 className="text-base sm:text-sm font-medium text-gray-900">Total Income</h3>
+              <p className="text-base text-gray-500">This month</p>
             </div>
           </div>
           <p className="text-lg sm:text-xl font-bold text-green-600">
@@ -175,9 +175,9 @@ export function MyIncome({
           <div className="bg-blue-100 rounded-lg p-1.5 sm:p-2">
             <DollarSign size={14} className="sm:w-4 sm:h-4 text-blue-600" />
           </div>
-          <h3 className="text-xs sm:text-sm font-semibold text-gray-900">Income Management</h3>
+          <h3 className="text-base sm:text-sm font-semibold text-gray-900">Income Management</h3>
         </div>
-        <div className="space-y-1 text-xs text-gray-600">
+        <div className="space-y-1 text-base text-gray-600">
           <p>• Primary income for your main salary and regular earnings</p>
           <p>• Extra income for freelance work, bonuses, and additional sources</p>
           <p>• Edit anytime to update your current month's income</p>
@@ -228,7 +228,7 @@ export function MyIncome({
             <div className="px-4 sm:px-6 space-y-4 sm:space-y-6">
               {/* Primary Income Field */}
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
                   Primary Income (Monthly Salary)
                 </label>
                 <div className="relative">
@@ -248,7 +248,7 @@ export function MyIncome({
               
               {/* Extra Income Field */}
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
                   Extra Income (Freelance, Bonuses, etc.)
                 </label>
                 <div className="relative">

@@ -11,7 +11,8 @@ import {
   Target,
   Calendar,
   Eye,
-  EyeOff
+  EyeOff,
+  MessageCircle
 } from 'lucide-react';
 
 interface FinancialReportProps {
@@ -68,7 +69,7 @@ export function FinancialReport({
     : 'bg-white text-gray-900 border-gray-200';
 
   return (
-    <div className={`p-6 space-y-4 h-full overflow-hidden ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`p-6 space-y-4 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -92,20 +93,20 @@ export function FinancialReport({
           <button
             onClick={handleShareWhatsApp}
             disabled={isGenerating}
-            className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg px-4 py-2 hover:from-green-600 hover:to-blue-600 transition-all duration-200 font-medium flex items-center space-x-2 disabled:opacity-50"
+            className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg p-3 hover:from-green-600 hover:to-blue-600 transition-all duration-200 disabled:opacity-50"
+            title="Share via WhatsApp"
           >
             {isGenerating ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
             ) : (
-              <Share2 size={16} />
+              <MessageCircle size={20} />
             )}
-            <span>Share via WhatsApp</span>
           </button>
         </div>
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[calc(100vh-140px)] overflow-y-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Left Column */}
         <div className="space-y-4">
           {/* Financial Health Overview */}
