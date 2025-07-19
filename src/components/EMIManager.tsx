@@ -245,9 +245,7 @@ export function EMIManager({
   }, [showAddEMI]);
 
   return (
-    <div className={baseClasses}>
-      <div className="px-6 pt-8 space-y-6 pb-12">
-      {/* Header */}
+    <div className="w-full p-6 space-y-6 pb-12">
       <div className="flex items-center justify-between">
         <div>
           <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -265,7 +263,6 @@ export function EMIManager({
         </button>
       </div>
 
-      {/* EMI Overview Cards */}
       <div className="grid grid-cols-2 gap-4">
         <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
           <div className="flex items-center justify-between mb-2">
@@ -319,7 +316,6 @@ export function EMIManager({
         </div>
       </div>
 
-      {/* EMI List */}
       <div className={`rounded-xl shadow-lg border p-6 ${cardClasses}`}>
         <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
           Your EMIs
@@ -423,7 +419,6 @@ export function EMIManager({
         )}
       </div>
 
-      {/* Financial Forecast */}
       {financialForecast.length > 0 && (
         <div className={`rounded-xl shadow-lg border p-6 ${cardClasses}`}>
           <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -458,11 +453,9 @@ export function EMIManager({
         </div>
       )}
 
-      {/* Add EMI Modal */}
       {showAddEMI && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl w-[90vw] max-w-xs max-h-[80vh] h-auto mx-auto p-4 sm:rounded-2xl sm:w-full sm:max-w-md md:max-w-lg lg:max-w-xl sm:p-6 shadow-2xl overflow-y-auto">
-            {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -490,9 +483,7 @@ export function EMIManager({
             </div>
             
             <div className="p-6">
-              {/* Main Form Row */}
               <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
-                {/* EMI Name */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     EMI Name *
@@ -507,7 +498,6 @@ export function EMIManager({
                   />
                 </div>
 
-                {/* Monthly Amount */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Monthly EMI Amount *
@@ -522,7 +512,6 @@ export function EMIManager({
                   />
                 </div>
 
-                {/* Tenure */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Tenure (Months) *
@@ -537,7 +526,6 @@ export function EMIManager({
                   />
                 </div>
 
-                {/* Category */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Category
@@ -556,7 +544,6 @@ export function EMIManager({
                 </div>
               </div>
 
-              {/* Total Amount Preview */}
               {monthlyAmount && tenure && (
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <p className="text-base text-gray-600">
@@ -567,7 +554,6 @@ export function EMIManager({
                 </div>
               )}
 
-              {/* Bottom Row */}
               <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
                 <button
                   type="button"
@@ -588,7 +574,6 @@ export function EMIManager({
           </div>
         </div>
       )}
-      </div>
     </div>
   );
 }

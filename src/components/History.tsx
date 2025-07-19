@@ -90,7 +90,7 @@ export function History({
   }
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="w-full p-6 space-y-6 pb-12">
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Search */}

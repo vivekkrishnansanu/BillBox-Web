@@ -69,7 +69,7 @@ export function FinancialReport({
     : 'bg-white text-gray-900 border-gray-200';
 
   return (
-    <div className={`p-6 space-y-4 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="w-full p-6 space-y-6 pb-12">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

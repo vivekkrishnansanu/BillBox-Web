@@ -228,23 +228,18 @@ export function WebLayout({
         </div>
       </aside>
       {/* Main Content */}
-      <div className={`flex-1 ml-0 md:ml-${sidebarCollapsed ? '20' : '72'}`}>
+      <div className="flex-1" style={{ marginLeft: sidebarCollapsed ? '5rem' : '18rem' }}>
         {/* Top Header */}
         <header className="bg-white border-b border-gray-200 px-4 sm:px-6 shadow-sm flex-shrink-0 fixed top-0 left-0 w-full z-50" style={{ paddingTop: '18.5px', paddingBottom: '18.5px' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 capitalize">
-                {activeTab === 'dashboard' ? 'Dashboard' : 
-                 activeTab === 'analytics' ? 'Analytics' :
-                 activeTab === 'subscriptions' ? 'Subscriptions' :
-                 activeTab === 'savings' ? 'Savings & Investments' :
-                 activeTab === 'emi' ? 'EMI Manager' :
-                 activeTab === 'income' ? 'My Income' :
-                 activeTab === 'history' ? 'Transaction History' :
-                 activeTab === 'report' ? 'Financial Reports' :
-                 activeTab === 'settings' ? 'Settings' :
-                 activeTab === 'profile' ? 'Profile' : activeTab}
-              </h2>
+              {/* BillBox logo and name */}
+              <div className="flex items-center space-x-2 mr-4">
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-1.5 shadow-lg">
+                  <Home size={22} className="text-white" />
+                </div>
+                <span className="text-lg font-bold text-gray-900 hidden sm:inline">BillBox</span>
+              </div>
             </div>
             
             <div className="flex items-center space-x-2 sm:space-x-4">

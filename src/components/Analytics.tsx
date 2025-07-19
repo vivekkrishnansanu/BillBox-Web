@@ -116,7 +116,7 @@ export function Analytics({
 
   if (expenses.length === 0) {
     return (
-      <div className="text-center py-8 sm:py-16">
+      <div className="w-full pt-6 pb-12 space-y-6 text-center">
         <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 ${
           darkMode ? 'bg-slate-800/50' : 'bg-slate-100'
         }`}>
@@ -139,7 +139,7 @@ export function Analytics({
   }
 
   return (
-    <div className={baseClasses + ' px-4 sm:px-6 md:px-12 py-6 sm:py-8 md:py-10 space-y-6 sm:space-y-8 pb-12'}>
+    <div className={`w-full p-6 space-y-6 pb-12 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className={`rounded-xl border shadow-lg p-4 sm:p-6 md:p-8 ${cardClasses}`}>

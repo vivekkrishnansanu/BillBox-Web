@@ -55,7 +55,7 @@ export function Summary({ expenses, categories, currency }: SummaryProps) {
     .sort(([,a], [,b]) => b - a);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="w-full p-6 space-y-6 pb-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">
           {t('summary')}

@@ -316,211 +316,209 @@ export function SavingsTracker({
   };
 
   return (
-    <div className={baseClasses}>
-      <div className="px-6 pt-8 space-y-6 pb-12">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Savings & Investments
-            </h1>
-            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Track your savings goals and investments
-            </p>
+    <div className="w-full p-6 space-y-6 pb-12">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            Savings & Investments
+          </h1>
+          <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            Track your savings goals and investments
+          </p>
+        </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl p-3 hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg"
+        >
+          <PlusCircle size={20} />
+        </button>
+      </div>
+
+      {/* Overview Cards */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-2 shadow-lg">
+              <DollarSign size={16} className="text-white" />
+            </div>
+            <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Total Saved
+            </span>
           </div>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl p-3 hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg"
-          >
-            <PlusCircle size={20} />
-          </button>
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {currency}{savingsOverview.totalSaved.toLocaleString()}
+          </p>
         </div>
 
-        {/* Overview Cards */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-2 shadow-lg">
-                <DollarSign size={16} className="text-white" />
-              </div>
-              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Total Saved
-              </span>
+        <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-2 shadow-lg">
+              <Calendar size={16} className="text-white" />
             </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {currency}{savingsOverview.totalSaved.toLocaleString()}
-            </p>
+            <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Monthly SIP
+            </span>
           </div>
-
-          <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-2 shadow-lg">
-                <Calendar size={16} className="text-white" />
-              </div>
-              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Monthly SIP
-              </span>
-            </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {currency}{savingsOverview.monthlyContribution.toLocaleString()}
-            </p>
-          </div>
-
-          <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-2 shadow-lg">
-                <TrendingUp size={16} className="text-white" />
-              </div>
-              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Expected Returns
-              </span>
-            </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {currency}{savingsOverview.expectedReturns.toLocaleString()}
-            </p>
-          </div>
-
-          <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-2 shadow-lg">
-                <Target size={16} className="text-white" />
-              </div>
-              <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Active Goals
-              </span>
-            </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {savings.filter(s => s.isActive && !s.isMatured).length}
-            </p>
-          </div>
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {currency}{savingsOverview.monthlyContribution.toLocaleString()}
+          </p>
         </div>
 
-        {/* Upcoming Maturity */}
-        {savingsOverview.upcomingMaturity.length > 0 && (
-          <div className={`rounded-xl shadow-lg border p-6 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-2 shadow-lg">
-                <Clock size={20} className="text-white" />
-              </div>
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Upcoming Maturity
-              </h3>
+        <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-2 shadow-lg">
+              <TrendingUp size={16} className="text-white" />
             </div>
-            
-            <div className="space-y-3">
-              {savingsOverview.upcomingMaturity.map((savings) => (
-                <div key={savings.id} className={`p-3 rounded-lg ${
-                  darkMode ? 'bg-slate-700/30' : 'bg-slate-50'
-                }`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{getTypeIcon(savings.type)}</span>
-                      <div>
-                        <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                          {savings.name}
-                        </p>
-                        <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                          Matures: {new Date(savings.maturityDate!).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                      {currency}{(savings.expectedMaturityAmount || savings.expectedTotal || savings.expectedFutureValue || savings.amount).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Expected Returns
+            </span>
           </div>
-        )}
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {currency}{savingsOverview.expectedReturns.toLocaleString()}
+          </p>
+        </div>
 
-        {/* Savings List */}
+        <div className={`rounded-xl shadow-lg border p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-2 shadow-lg">
+              <Target size={16} className="text-white" />
+            </div>
+            <span className={`text-base font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Active Goals
+            </span>
+          </div>
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {savings.filter(s => s.isActive && !s.isMatured).length}
+          </p>
+        </div>
+      </div>
+
+      {/* Upcoming Maturity */}
+      {savingsOverview.upcomingMaturity.length > 0 && (
         <div className={`rounded-xl shadow-lg border p-6 ${cardClasses}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            Your Savings & Investments
-          </h3>
-          
-          {savings.length === 0 ? (
-            <div className="text-center py-8">
-              <div className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${
-                darkMode ? 'bg-emerald-900/30' : 'bg-emerald-50'
-              }`}>
-                <Target size={32} className="text-emerald-600" />
-              </div>
-              <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Start Your Savings Journey
-              </h3>
-              <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Add your first savings goal or investment
-              </p>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl px-6 py-3 hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium shadow-lg"
-              >
-                Add Savings Goal
-              </button>
+          <div className="flex items-center space-x-2 mb-4">
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-2 shadow-lg">
+              <Clock size={20} className="text-white" />
             </div>
-          ) : (
-            <div className="space-y-3">
-              {savings.map((savingsItem) => (
-                <div key={savingsItem.id} className={`p-4 rounded-lg border ${
-                  darkMode ? 'border-slate-600 bg-slate-700/30' : 'border-slate-200 bg-slate-50'
-                }`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{getTypeIcon(savingsItem.type)}</span>
-                      <div>
-                        <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                          {savingsItem.name}
-                        </h4>
-                        <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                          {getTypeName(savingsItem.type)}
+            <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Upcoming Maturity
+            </h3>
+          </div>
+          
+          <div className="space-y-3">
+            {savingsOverview.upcomingMaturity.map((savings) => (
+              <div key={savings.id} className={`p-3 rounded-lg ${
+                darkMode ? 'bg-slate-700/30' : 'bg-slate-50'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">{getTypeIcon(savings.type)}</span>
+                    <div>
+                      <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {savings.name}
+                      </p>
+                      <p className={`text-base ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        Matures: {new Date(savings.maturityDate!).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {currency}{(savings.expectedMaturityAmount || savings.expectedTotal || savings.expectedFutureValue || savings.amount).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Savings List */}
+      <div className={`rounded-xl shadow-lg border p-6 ${cardClasses}`}>
+        <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          Your Savings & Investments
+        </h3>
+        
+        {savings.length === 0 ? (
+          <div className="text-center py-8">
+            <div className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${
+              darkMode ? 'bg-emerald-900/30' : 'bg-emerald-50'
+            }`}>
+              <Target size={32} className="text-emerald-600" />
+            </div>
+            <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Start Your Savings Journey
+            </h3>
+            <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Add your first savings goal or investment
+            </p>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl px-6 py-3 hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium shadow-lg"
+            >
+              Add Savings Goal
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {savings.map((savingsItem) => (
+              <div key={savingsItem.id} className={`p-4 rounded-lg border ${
+                darkMode ? 'border-slate-600 bg-slate-700/30' : 'border-slate-200 bg-slate-50'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">{getTypeIcon(savingsItem.type)}</span>
+                    <div>
+                      <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {savingsItem.name}
+                      </h4>
+                      <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        {getTypeName(savingsItem.type)}
+                      </p>
+                      {savingsItem.purpose && (
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          {savingsItem.purpose}
                         </p>
-                        {savingsItem.purpose && (
-                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            {savingsItem.purpose}
-                          </p>
-                        )}
-                      </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <div className="text-right">
+                      <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {currency}{savingsItem.amount.toLocaleString()}
+                      </p>
+                      {savingsItem.maturityDate && (
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          Matures: {new Date(savingsItem.maturityDate).toLocaleDateString()}
+                        </p>
+                      )}
                     </div>
                     
-                    <div className="flex items-center space-x-3">
-                      <div className="text-right">
-                        <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                          {currency}{savingsItem.amount.toLocaleString()}
-                        </p>
-                        {savingsItem.maturityDate && (
-                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            Matures: {new Date(savingsItem.maturityDate).toLocaleDateString()}
-                          </p>
-                        )}
-                      </div>
-                      
-                      <div className="flex space-x-1">
-                        <button
-                          onClick={() => handleEditSavings(savingsItem)}
-                          className={`p-1 rounded transition-colors ${
-                            darkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-200'
-                          }`}
-                        >
-                          <Edit2 size={14} />
-                        </button>
-                        <button
-                          onClick={() => onDeleteSavings(savingsItem.id)}
-                          className={`p-1 rounded transition-colors ${
-                            darkMode ? 'hover:bg-red-900/20 text-red-400' : 'hover:bg-red-50 text-red-600'
-                          }`}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
+                    <div className="flex space-x-1">
+                      <button
+                        onClick={() => handleEditSavings(savingsItem)}
+                        className={`p-1 rounded transition-colors ${
+                          darkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-200'
+                        }`}
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                      <button
+                        onClick={() => onDeleteSavings(savingsItem.id)}
+                        className={`p-1 rounded transition-colors ${
+                          darkMode ? 'hover:bg-red-900/20 text-red-400' : 'hover:bg-red-50 text-red-600'
+                        }`}
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Add/Edit Savings Modal */}

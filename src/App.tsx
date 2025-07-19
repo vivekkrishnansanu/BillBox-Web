@@ -388,6 +388,17 @@ function App() {
 
   const currencySymbol = '₹'; // Fixed to Indian Rupee only
 
+  useEffect(() => {
+    if (categories.length === 0) {
+      setCategories(DEFAULT_CATEGORIES);
+    }
+  }, [categories, setCategories]);
+
+  const handleEditExpense = (expense: Expense) => {
+    setEditingExpense(expense);
+    setIsAddModalOpen(true);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">

@@ -196,202 +196,200 @@ export function Subscriptions({
   }, [showAddModal]);
 
   return (
-    <div className={`min-h-screen ${baseClasses}`}>
-      <div className="px-6 pt-8 space-y-6 pb-12">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              Subscriptions
-            </h1>
-            <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Manage your recurring subscriptions
-            </p>
+    <div className="w-full p-6 space-y-6 pb-12">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            Subscriptions
+          </h1>
+          <p className={`text-base ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            Manage your recurring subscriptions
+          </p>
+        </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg p-3 hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 shadow-lg"
+        >
+          <PlusCircle size={20} />
+        </button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className={`rounded-2xl border shadow-lg p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <RotateCcw size={16} className="text-blue-500" />
+            <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Active
+            </span>
           </div>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg p-3 hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 shadow-lg"
-          >
-            <PlusCircle size={20} />
-          </button>
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {stats.activeCount}
+          </p>
+          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            subscriptions
+          </p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className={`rounded-2xl border shadow-lg p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <RotateCcw size={16} className="text-blue-500" />
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Active
-              </span>
-            </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {stats.activeCount}
-            </p>
-            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              subscriptions
-            </p>
+        <div className={`rounded-2xl border shadow-lg p-4 ${cardClasses}`}>
+          <div className="flex items-center space-x-2 mb-2">
+            <DollarSign size={16} className="text-green-500" />
+            <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Monthly Cost
+            </span>
           </div>
-
-          <div className={`rounded-2xl border shadow-lg p-4 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-2">
-              <DollarSign size={16} className="text-green-500" />
-              <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Monthly Cost
-              </span>
-            </div>
-            <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-              {currency}{stats.monthlyTotal.toFixed(0)}
-            </p>
-            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {currency}{stats.yearlyTotal.toFixed(0)}/year
-            </p>
-          </div>
+          <p className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            {currency}{stats.monthlyTotal.toFixed(0)}
+          </p>
+          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            {currency}{stats.yearlyTotal.toFixed(0)}/year
+          </p>
         </div>
+      </div>
 
-        {/* Upcoming Renewals */}
-        {stats.upcomingRenewals.length > 0 && (
-          <div className={`rounded-2xl border shadow-lg p-6 ${cardClasses}`}>
-            <div className="flex items-center space-x-2 mb-4">
-              <AlertCircle size={20} className="text-orange-500" />
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Upcoming Renewals
-              </h3>
-            </div>
-            
-            <div className="space-y-3">
-              {stats.upcomingRenewals.map((subscription) => {
-                const daysUntil = getDaysUntilRenewal(subscription.nextBillingDate);
-                const categoryInfo = subscriptionCategories.find(cat => cat.id === subscription.category);
-                
-                return (
-                  <div key={subscription.id} className={`p-3 rounded-lg ${
-                    darkMode ? 'bg-gray-700' : 'bg-gray-50'
-                  }`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-2xl">{categoryInfo?.icon || '📋'}</span>
-                        <div>
-                          <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                            {subscription.name}
-                          </p>
-                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            {daysUntil === 0 ? 'Renews today' : `Renews in ${daysUntil} days`}
-                          </p>
-                        </div>
-                      </div>
-                      <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {currency}{subscription.amount.toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Subscriptions List */}
+      {/* Upcoming Renewals */}
+      {stats.upcomingRenewals.length > 0 && (
         <div className={`rounded-2xl border shadow-lg p-6 ${cardClasses}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-            All Subscriptions
-          </h3>
+          <div className="flex items-center space-x-2 mb-4">
+            <AlertCircle size={20} className="text-orange-500" />
+            <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              Upcoming Renewals
+            </h3>
+          </div>
           
-          {subscriptions.length === 0 ? (
-            <div className="text-center py-8">
-              <div className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${
-                darkMode ? 'bg-blue-900/30' : 'bg-blue-50'
-              }`}>
-                <RotateCcw size={32} className="text-blue-600" />
-              </div>
-              <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                No Subscriptions
-              </h3>
-              <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Add your first subscription to start tracking
-              </p>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg px-6 py-3 hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 font-medium"
-              >
-                Add Subscription
-              </button>
+          <div className="space-y-3">
+            {stats.upcomingRenewals.map((subscription) => {
+              const daysUntil = getDaysUntilRenewal(subscription.nextBillingDate);
+              const categoryInfo = subscriptionCategories.find(cat => cat.id === subscription.category);
+              
+              return (
+                <div key={subscription.id} className={`p-3 rounded-lg ${
+                  darkMode ? 'bg-gray-700' : 'bg-gray-50'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{categoryInfo?.icon || '📋'}</span>
+                      <div>
+                        <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {subscription.name}
+                        </p>
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          {daysUntil === 0 ? 'Renews today' : `Renews in ${daysUntil} days`}
+                        </p>
+                      </div>
+                    </div>
+                    <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                      {currency}{subscription.amount.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Subscriptions List */}
+      <div className={`rounded-2xl border shadow-lg p-6 ${cardClasses}`}>
+        <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          All Subscriptions
+        </h3>
+        
+        {subscriptions.length === 0 ? (
+          <div className="text-center py-8">
+            <div className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${
+              darkMode ? 'bg-blue-900/30' : 'bg-blue-50'
+            }`}>
+              <RotateCcw size={32} className="text-blue-600" />
             </div>
-          ) : (
-            <div className="space-y-3">
-              {subscriptions.map((subscription) => {
-                const categoryInfo = subscriptionCategories.find(cat => cat.id === subscription.category);
-                const daysUntil = getDaysUntilRenewal(subscription.nextBillingDate);
-                
-                return (
-                  <div key={subscription.id} className={`p-4 rounded-lg border ${
-                    darkMode ? 'border-gray-600 bg-gray-700' : 'border-gray-200 bg-gray-50'
-                  }`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-2xl">{categoryInfo?.icon || '📋'}</span>
-                        <div>
-                          <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                            {subscription.name}
-                          </h4>
-                          <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                            {categoryInfo?.name} • {subscription.frequency}
+            <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              No Subscriptions
+            </h3>
+            <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Add your first subscription to start tracking
+            </p>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg px-6 py-3 hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 font-medium"
+            >
+              Add Subscription
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {subscriptions.map((subscription) => {
+              const categoryInfo = subscriptionCategories.find(cat => cat.id === subscription.category);
+              const daysUntil = getDaysUntilRenewal(subscription.nextBillingDate);
+              
+              return (
+                <div key={subscription.id} className={`p-4 rounded-lg border ${
+                  darkMode ? 'border-gray-600 bg-gray-700' : 'border-gray-200 bg-gray-50'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{categoryInfo?.icon || '📋'}</span>
+                      <div>
+                        <h4 className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {subscription.name}
+                        </h4>
+                        <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                          {categoryInfo?.name} • {subscription.frequency}
+                        </p>
+                        {subscription.description && (
+                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {subscription.description}
                           </p>
-                          {subscription.description && (
-                            <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                              {subscription.description}
-                            </p>
-                          )}
-                        </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="text-right">
+                        <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {currency}{subscription.amount.toLocaleString()}
+                        </p>
+                        <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          Next: {new Date(subscription.nextBillingDate).toLocaleDateString()}
+                        </p>
                       </div>
                       
-                      <div className="flex items-center space-x-3">
-                        <div className="text-right">
-                          <p className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                            {currency}{subscription.amount.toLocaleString()}
-                          </p>
-                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            Next: {new Date(subscription.nextBillingDate).toLocaleDateString()}
-                          </p>
-                        </div>
-                        
-                        <div className="flex space-x-1">
-                          <button
-                            onClick={() => toggleSubscriptionStatus(subscription.id, subscription.isActive)}
-                            className={`p-1 rounded transition-colors ${
-                              subscription.isActive
-                                ? darkMode ? 'text-green-400 hover:bg-green-900/20' : 'text-green-600 hover:bg-green-50'
-                                : darkMode ? 'text-gray-400 hover:bg-gray-600' : 'text-gray-400 hover:bg-gray-200'
-                            }`}
-                            title={subscription.isActive ? 'Pause subscription' : 'Resume subscription'}
-                          >
-                            {subscription.isActive ? <Pause size={14} /> : <Play size={14} />}
-                          </button>
-                          <button
-                            onClick={() => handleEditSubscription(subscription)}
-                            className={`p-1 rounded transition-colors ${
-                              darkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
-                            }`}
-                          >
-                            <Edit2 size={14} />
-                          </button>
-                          <button
-                            onClick={() => onDeleteSubscription(subscription.id)}
-                            className={`p-1 rounded transition-colors ${
-                              darkMode ? 'hover:bg-red-900/20 text-red-400' : 'hover:bg-red-50 text-red-600'
-                            }`}
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={() => toggleSubscriptionStatus(subscription.id, subscription.isActive)}
+                          className={`p-1 rounded transition-colors ${
+                            subscription.isActive
+                              ? darkMode ? 'text-green-400 hover:bg-green-900/20' : 'text-green-600 hover:bg-green-50'
+                              : darkMode ? 'text-gray-400 hover:bg-gray-600' : 'text-gray-400 hover:bg-gray-200'
+                          }`}
+                          title={subscription.isActive ? 'Pause subscription' : 'Resume subscription'}
+                        >
+                          {subscription.isActive ? <Pause size={14} /> : <Play size={14} />}
+                        </button>
+                        <button
+                          onClick={() => handleEditSubscription(subscription)}
+                          className={`p-1 rounded transition-colors ${
+                            darkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
+                          }`}
+                        >
+                          <Edit2 size={14} />
+                        </button>
+                        <button
+                          onClick={() => onDeleteSubscription(subscription.id)}
+                          className={`p-1 rounded transition-colors ${
+                            darkMode ? 'hover:bg-red-900/20 text-red-400' : 'hover:bg-red-50 text-red-600'
+                          }`}
+                        >
+                          <Trash2 size={14} />
+                        </button>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Add/Edit Subscription Modal */}

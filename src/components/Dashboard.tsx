@@ -77,7 +77,7 @@ export function Dashboard({
   }
 
   return (
-    <div className={`p-4 sm:p-6 space-y-4 sm:space-y-6 pb-80 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="w-full p-6 space-y-6 pb-12">
       {/* Header */}
       <div className="text-center">
         <h1 className={`text-xl sm:text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
