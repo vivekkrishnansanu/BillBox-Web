@@ -200,7 +200,7 @@ export function AddExpenseModal({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <form
         onSubmit={handleSubmit}
-        className={`bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh] ${darkMode ? 'bg-gray-900 text-white' : ''}`}
+        className={`bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh] ${darkMode ? 'bg-gray-900 text-white' : ''}`}
         autoComplete="off"
       >
         {/* Header */}
@@ -225,22 +225,19 @@ export function AddExpenseModal({
         
         <form onSubmit={handleSubmit} className="p-6">
           {/* Main Form Row */}
-          <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
             {/* Amount */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 Amount
               </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                  ₹
-                </span>
+              <div>
                 <input
                   type="number"
                   value={amount}
                   onChange={(e) => handleAmountChange(e.target.value)}
                   placeholder="0.00"
-                  className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                  className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
                   required
                   min="0"
                   step="0.01"
@@ -358,37 +355,36 @@ export function AddExpenseModal({
           </div>
 
           {/* Bottom Row */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            {/* Recurring Checkbox */}
-            <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-end sm:gap-16 mt-6">
+            <div className="flex items-center gap-2 mb-2 sm:mb-0 whitespace-nowrap">
               <input
                 type="checkbox"
                 id="recurring"
                 checked={isRecurring}
-                onChange={(e) => setIsRecurring(e.target.checked)}
-                className="w-4 h-4 text-green-600 rounded focus:ring-green-500"
+                onChange={() => setIsRecurring(!isRecurring)}
+                className="form-checkbox h-5 w-5 text-green-600 rounded focus:ring-emerald-500 border-gray-300"
               />
-              <label htmlFor="recurring" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                <RotateCcw size={14} className="text-gray-500" />
-                <span>Monthly bill</span>
-              </label>
+              <span className="flex items-center gap-2 whitespace-nowrap">
+                <RotateCcw size={18} className="text-gray-400" />
+                <label htmlFor="recurring" className="text-base font-medium text-gray-700 select-none cursor-pointer">
+                  Monthly bill
+                </label>
+              </span>
             </div>
-
-            {/* Actions */}
-            <div className="flex space-x-3">
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                className="w-full px-6 py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                disabled={!amount || !description || !category}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
               >
-                {editingExpense ? 'Update' : 'Add'} Expense
+                <Plus size={18} />
+                {editingExpense ? 'Update Expense' : 'Add Expense'}
               </button>
             </div>
           </div>

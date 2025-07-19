@@ -461,7 +461,7 @@ export function EMIManager({
       {/* Add EMI Modal */}
       {showAddEMI && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl overflow-y-auto max-h-[100dvh]">
+          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl overflow-y-auto max-h-[100dvh]">
             {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -491,7 +491,7 @@ export function EMIManager({
             
             <div className="p-6">
               {/* Main Form Row */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
                 {/* EMI Name */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
@@ -512,17 +512,14 @@ export function EMIManager({
                   <label className="block text-sm font-medium text-gray-700">
                     Monthly EMI Amount *
                   </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
-                    <input
-                      type="number"
-                      value={monthlyAmount}
-                      onChange={(e) => setMonthlyAmount(e.target.value)}
-                      placeholder="15000"
-                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="number"
+                    value={monthlyAmount}
+                    onChange={(e) => setMonthlyAmount(e.target.value)}
+                    placeholder="15000"
+                    className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
                 </div>
 
                 {/* Tenure */}
@@ -571,30 +568,21 @@ export function EMIManager({
               )}
 
               {/* Bottom Row */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <div></div>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => {
-                      setShowAddEMI(false);
-                      setEditingEMI(null);
-                      setEmiName('');
-                      setMonthlyAmount('');
-                      setTenure('');
-                      setCategory('loan');
-                    }}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleAddEMI}
-                    disabled={!emiName || !monthlyAmount || !tenure}
-                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {editingEMI ? 'Update' : 'Add'} EMI
-                  </button>
-                </div>
+              <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setShowAddEMI(false)}
+                  className="w-full py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddEMI}
+                  className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  {editingEMI ? 'Update EMI' : 'Add EMI'}
+                </button>
               </div>
             </div>
           </div>

@@ -173,6 +173,11 @@ export function Subscriptions({
     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400'
     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500';
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add your form submission logic here if needed
+  };
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -392,7 +397,7 @@ export function Subscriptions({
       {/* Add/Edit Subscription Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <form className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh]" autoComplete="off" onSubmit={handleSubmit}>
+          <form className="bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh]" autoComplete="off" onSubmit={handleSubmit}>
             {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -415,7 +420,7 @@ export function Subscriptions({
             
             <div className="p-6">
               {/* Main Form Row */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
                 {/* Subscription Name */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
@@ -485,7 +490,7 @@ export function Subscriptions({
               </div>
 
               {/* Second Row */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
                 {/* Description */}
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
@@ -507,23 +512,21 @@ export function Subscriptions({
               </div>
 
               {/* Bottom Row */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <div></div>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={resetForm}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleAddSubscription}
-                    disabled={!name || !amount}
-                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {editingSubscription ? 'Update' : 'Add'} Subscription
-                  </button>
-                </div>
+              <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="w-full py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddSubscription}
+                  className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  {editingSubscription ? 'Update Subscription' : 'Add Subscription'}
+                </button>
               </div>
             </div>
           </form>

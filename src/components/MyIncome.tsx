@@ -172,7 +172,7 @@ export function MyIncome({
       {/* Edit Modal - Correct Structure */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl overflow-y-auto max-h-[100dvh]">
+          <div className="bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl overflow-y-auto max-h-[100dvh]">
             {/* Modal Header */}
             <div className="p-4 sm:p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -211,52 +211,59 @@ export function MyIncome({
             
             {/* Modal Content */}
             <div className="px-4 sm:px-6 space-y-4 sm:space-y-6">
-              {/* Primary Income Field */}
-              <div>
-                <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
-                  Primary Income (Monthly Salary)
-                </label>
-                <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 mb-4">
-                  <div className="flex items-center text-xl font-bold text-gray-900">
-                    <span className="text-emerald-600">₹</span>
-                    <span className="ml-2">{primaryIncome || '0.00'}</span>
+              <div className="grid grid-cols-1 gap-y-4 mb-6 sm:grid-cols-2 sm:gap-4">
+                {/* Primary Income Field */}
+                <div>
+                  <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
+                    Primary Income (Monthly Salary)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={primaryIncome}
+                      onChange={e => setPrimaryIncome(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-4 pr-4 py-4 text-2xl font-bold text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      min="0"
+                    />
                   </div>
                 </div>
-              </div>
-              
-              {/* Extra Income Field */}
-              <div>
-                <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
-                  Extra Income (Freelance, Bonuses, etc.)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">₹</span>
-                  <input
-                    type="number"
-                    className="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2 text-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="5000"
-                    value={extraIncome}
-                    onChange={e => setExtraIncome(e.target.value)}
-                    min="0"
-                  />
+                
+                {/* Extra Income Field */}
+                <div>
+                  <label className="block text-base sm:text-sm font-medium text-gray-700 mb-2">
+                    Extra Income
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={extraIncome}
+                      onChange={e => setExtraIncome(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-4 pr-4 py-4 text-2xl font-bold text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      min="0"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
             
             {/* Modal Footer */}
-            <div className="p-4 sm:p-6 border-t border-gray-200 flex space-x-3 mt-4 sm:mt-6">
+            <div className="p-4 sm:p-6 border-t border-gray-200 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 mt-6">
               <button
+                type="button"
                 onClick={handleCancel}
-                className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm sm:text-base"
+                className="w-full py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleSave}
-                className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 font-medium flex items-center justify-center space-x-2 text-sm sm:text-base"
+                className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
               >
-                <Save size={14} className="sm:w-4 sm:h-4" />
-                <span>{currentIncome ? 'Update' : 'Add'} Income</span>
+                <Save size={18} />
+                {currentIncome ? 'Update Income' : 'Set Income'}
               </button>
             </div>
           </div>

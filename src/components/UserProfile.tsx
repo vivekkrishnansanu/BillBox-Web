@@ -189,7 +189,7 @@ export function UserProfile({ user, onSignOut, darkMode = false }: UserProfilePr
       {/* Edit Profile Modal */}
       {showEditProfile && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className={`w-full max-w-md rounded-xl shadow-2xl overflow-y-auto max-h-[100dvh] ${
+          <div className={`w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 rounded-xl shadow-2xl overflow-y-auto max-h-[100dvh] ${
             darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
           } border`}>
             <div className="p-6">
@@ -226,20 +226,18 @@ export function UserProfile({ user, onSignOut, darkMode = false }: UserProfilePr
                 </div>
               </div>
               
-              <div className="flex space-x-3 mt-6">
+              <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 mt-6">
                 <button
+                  type="button"
                   onClick={() => setShowEditProfile(false)}
-                  className={`flex-1 px-6 py-3 rounded-xl font-medium transition-colors ${
-                    darkMode 
-                      ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' 
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
+                  className="w-full py-3 rounded-lg border border-gray-300 text-gray-700 font-medium bg-white hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
+                  type="button"
                   onClick={() => setShowEditProfile(false)}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 font-medium shadow-lg"
+                  className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
                 >
                   Save Changes
                 </button>

@@ -310,6 +310,11 @@ export function SavingsTracker({
     }
   }, [resetFlag]);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add your form submission logic here if needed
+  };
+
   return (
     <div className={baseClasses}>
       <div className="px-6 pt-8 space-y-6 pb-12">
@@ -521,7 +526,7 @@ export function SavingsTracker({
       {/* Add/Edit Savings Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <form className="bg-white rounded-xl sm:rounded-2xl w-full max-w-md shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh]" autoComplete="off" onSubmit={handleSubmit}>
+          <form className="bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh]" autoComplete="off" onSubmit={handleSubmit}>
             {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -544,47 +549,14 @@ export function SavingsTracker({
             
             <div className="p-6">
               {/* Main Form Row */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
-                {/* Savings Type */}
-                <div className="space-y-2">
-                  <label className="block text-base font-medium text-gray-700">
-                    Savings Type *
-                  </label>
-                  <select
-                    value={type}
-                    onChange={(e) => setType(e.target.value as 'fd' | 'rd' | 'sip' | 'custom')}
-                    className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                  >
-                    <option value="fd">Fixed Deposit (FD)</option>
-                    <option value="rd">Recurring Deposit (RD)</option>
-                    <option value="sip">SIP Investment</option>
-                    <option value="custom">Custom Savings</option>
-                  </select>
-                </div>
-
-                {/* Name */}
-                <div className="space-y-2">
-                  <label className="block text-base font-medium text-gray-700">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g., Emergency Fund"
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                    required
-                  />
-                </div>
-
-                {/* Amount/Investment */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                {/* Row 1: Amount/Investment & Name */}
                 <div className="space-y-2">
                   <label className="block text-base font-medium text-gray-700">
                     {type === 'fd' || type === 'custom' ? 'Amount' : 
                      type === 'rd' ? 'Monthly Deposit' : 'Monthly Investment'} *
                   </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                  <div>
                     <input
                       type="number"
                       value={type === 'fd' || type === 'custom' ? amount : 
@@ -596,60 +568,129 @@ export function SavingsTracker({
                       }}
                       placeholder={type === 'fd' || type === 'custom' ? '100000' : 
                                   type === 'rd' ? '5000' : '10000'}
-                      className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                      className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
                       required
                     />
                   </div>
                 </div>
-
-                {/* Rate/Return */}
                 <div className="space-y-2">
-                  <label className="block text-base font-medium text-gray-700">
-                    {type === 'sip' ? 'Expected Return (%)' : 'Interest Rate (%)'} *
-                  </label>
+                  <label className="block text-base font-medium text-gray-700">Name *</label>
                   <input
-                    type="number"
-                    value={type === 'sip' ? expectedReturn : interestRate}
-                    onChange={(e) => {
-                      if (type === 'sip') setExpectedReturn(e.target.value);
-                      else setInterestRate(e.target.value);
-                    }}
-                    placeholder={type === 'sip' ? '12' : '6.5'}
-                    step="0.1"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g., Emergency Fund"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
                     required
                   />
                 </div>
-              </div>
-
-              {/* Second Row for Additional Fields */}
-              <div className="grid grid-cols-4 gap-4 mb-6">
-                {/* Period/Tenure/Duration */}
-                <div className="space-y-2">
-                  <label className="block text-base font-medium text-gray-700">
-                    {type === 'fd' ? 'Maturity Period (Months)' : 
-                     type === 'rd' ? 'Tenure (Months)' : 
-                     type === 'sip' ? 'Duration (Months)' : 'Period (Months)'} *
-                  </label>
-                  <input
-                    type="number"
-                    value={type === 'fd' ? maturityPeriod : 
-                           type === 'rd' ? tenure : 
-                           type === 'sip' ? duration : ''}
-                    onChange={(e) => {
-                      if (type === 'fd') setMaturityPeriod(e.target.value);
-                      else if (type === 'rd') setTenure(e.target.value);
-                      else if (type === 'sip') setDuration(e.target.value);
-                    }}
-                    placeholder={type === 'fd' ? '12' : 
-                                type === 'rd' ? '24' : 
-                                type === 'sip' ? '60' : '12'}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                    required
-                  />
-                </div>
-
-                {/* Fund Name (SIP only) */}
+                {/* Row 2: Interest Rate & Period (FD only) or Tenure/Duration/Period for others */}
+                {type === 'fd' ? (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Interest Rate (%) *</label>
+                      <input
+                        type="number"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value)}
+                        placeholder="6.5"
+                        step="0.1"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Maturity Period (Months) *</label>
+                      <input
+                        type="number"
+                        value={maturityPeriod}
+                        onChange={(e) => setMaturityPeriod(e.target.value)}
+                        placeholder="12"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                  </>
+                ) : type === 'rd' ? (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Interest Rate (%) *</label>
+                      <input
+                        type="number"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value)}
+                        placeholder="6.5"
+                        step="0.1"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Tenure (Months) *</label>
+                      <input
+                        type="number"
+                        value={tenure}
+                        onChange={(e) => setTenure(e.target.value)}
+                        placeholder="24"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                  </>
+                ) : type === 'sip' ? (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Interest Rate (%) *</label>
+                      <input
+                        type="number"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value)}
+                        placeholder="6.5"
+                        step="0.1"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Duration (Months) *</label>
+                      <input
+                        type="number"
+                        value={duration}
+                        onChange={(e) => setDuration(e.target.value)}
+                        placeholder="60"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Interest Rate (%) *</label>
+                      <input
+                        type="number"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value)}
+                        placeholder="6.5"
+                        step="0.1"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-base font-medium text-gray-700">Period (Months) *</label>
+                      <input
+                        type="number"
+                        value={duration}
+                        onChange={(e) => setDuration(e.target.value)}
+                        placeholder="12"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+                {/* Row 3: Purpose & Start Date */}
                 <div className="space-y-2">
                   <label className="block text-base font-medium text-gray-700">
                     {type === 'sip' ? 'Fund Name *' : 'Purpose'}
@@ -666,56 +707,34 @@ export function SavingsTracker({
                     required={type === 'sip'}
                   />
                 </div>
-
-                {/* Frequency (Custom only) */}
                 <div className="space-y-2">
-                  <label className="block text-base font-medium text-gray-700">
-                    {type === 'custom' ? 'Frequency' : 'Start Date *'}
-                  </label>
-                  {type === 'custom' ? (
-                    <select
-                      value={frequency}
-                      onChange={(e) => setFrequency(e.target.value as 'one-time' | 'monthly' | 'quarterly' | 'yearly')}
-                      className="w-full pl-4 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                    >
-                      <option value="one-time">One-time</option>
-                      <option value="monthly">Monthly</option>
-                      <option value="quarterly">Quarterly</option>
-                      <option value="yearly">Yearly</option>
-                    </select>
-                  ) : (
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
-                      required
-                    />
-                  )}
+                  <label className="block text-base font-medium text-gray-700">Start Date *</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:bg-white transition-colors"
+                    required
+                  />
                 </div>
-
-                {/* Empty space for alignment */}
-                <div></div>
               </div>
 
               {/* Bottom Row */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <div></div>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={resetForm}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleAddSavings}
-                    disabled={!name || !amount}
-                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {editingSavings ? 'Update' : 'Add'} Savings
-                  </button>
-                </div>
+              <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="w-full py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddSavings}
+                  className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  {editingSavings ? 'Update Savings' : 'Add Savings Goal'}
+                </button>
               </div>
             </div>
           </form>
