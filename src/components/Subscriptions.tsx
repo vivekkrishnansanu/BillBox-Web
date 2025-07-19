@@ -397,7 +397,7 @@ export function Subscriptions({
       {/* Add/Edit Subscription Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <form className="bg-white rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 shadow-2xl transition-all duration-200 overflow-y-auto max-h-[100dvh]" autoComplete="off" onSubmit={handleSubmit}>
+          <form className="bg-white rounded-2xl w-[90vw] max-w-xs max-h-[80vh] h-auto mx-auto p-4 sm:rounded-2xl sm:w-full sm:max-w-md md:max-w-lg lg:max-w-xl sm:p-6 shadow-2xl transition-all duration-200 overflow-y-auto" autoComplete="off" onSubmit={handleSubmit}>
             {/* Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">

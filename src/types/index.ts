@@ -9,6 +9,7 @@ export interface Expense {
   nextDueDate?: string;
   isPaid?: boolean;
   createdAt: string;
+  user_id?: string;
   aiConfidence?: number;
   location?: string;
   merchant?: string;
@@ -92,6 +93,7 @@ export interface Income {
   incomeSource?: string;
   month: string; // YYYY-MM format
   createdAt: string;
+  user_id?: string;
 }
 
 export interface EMI {
@@ -105,6 +107,7 @@ export interface EMI {
   endMonth: string; // calculated: startMonth + tenure
   isActive: boolean;
   createdAt: string;
+  user_id?: string;
 }
 
 export interface FinancialForecast {
@@ -159,6 +162,7 @@ export interface Savings {
   currentValue?: number;
   
   createdAt: string;
+  user_id?: string;
 }
 
 export interface Subscription {
@@ -173,6 +177,7 @@ export interface Subscription {
   autoRenewal: boolean;
   description?: string;
   createdAt: string;
+  user_id?: string;
 }
 
 export interface SavingsOverview {

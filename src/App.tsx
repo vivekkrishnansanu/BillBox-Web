@@ -21,6 +21,7 @@ import { History } from './components/History';
 import { Settings } from './components/Settings';
 import { TransactionCard } from './components/TransactionCard';
 import { MyIncome } from './components/MyIncome';
+import { supabase } from './lib/supabase';
 
 function App() {
   const [user, setUser] = useState<UserProfileType | null>(null);
@@ -110,34 +111,59 @@ function App() {
     return () => clearInterval(interval);
   }, [expenses, setExpenses]);
 
-  const handleSaveExpense = (expenseData: Omit<Expense, 'id' | 'createdAt'>) => {
+  // Fetch all user data from Supabase on login
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const [expensesRes, incomeRes, emisRes, savingsRes, subscriptionsRes] = await Promise.all([
+          supabase.from('expenses').select('*').eq('user_id', user.uid).order('createdAt', { ascending: false }),
+          supabase.from('income').select('*').eq('user_id', user.uid).order('createdAt', { ascending: false }),
+          supabase.from('emis').select('*').eq('user_id', user.uid).order('createdAt', { ascending: false }),
+          supabase.from('savings').select('*').eq('user_id', user.uid).order('createdAt', { ascending: false }),
+          supabase.from('subscriptions').select('*').eq('user_id', user.uid).order('createdAt', { ascending: false }),
+        ]);
+        if (!expensesRes.error && expensesRes.data) setExpenses(expensesRes.data);
+        if (!incomeRes.error && incomeRes.data) setIncome(incomeRes.data);
+        if (!emisRes.error && emisRes.data) setEmis(emisRes.data);
+        if (!savingsRes.error && savingsRes.data) setSavings(savingsRes.data);
+        if (!subscriptionsRes.error && subscriptionsRes.data) setSubscriptions(subscriptionsRes.data);
+      })();
+    }
+  }, [user]);
+
+  // Update handleSaveExpense to persist to Supabase
+  const handleSaveExpense = async (expenseData: Omit<Expense, 'id' | 'createdAt'>) => {
+    if (!user) return;
     if (editingExpense) {
-      // Update existing expense
-      const updatedExpenses = expenses.map(expense =>
-        expense.id === editingExpense.id
-          ? { ...expense, ...expenseData }
-          : expense
-      );
-      setExpenses(updatedExpenses);
+      // Update existing expense in Supabase
+      const updatedExpense = { ...editingExpense, ...expenseData };
+      await supabase
+        .from('expenses')
+        .update(updatedExpense)
+        .eq('id', editingExpense.id)
+        .eq('user_id', user.uid);
+      setExpenses(expenses.map(expense =>
+        expense.id === editingExpense.id ? updatedExpense : expense
+      ));
       setEditingExpense(undefined);
     } else {
-      // Add new expense
+      // Add new expense to Supabase
       const newExpense: Expense = {
         id: Date.now().toString(),
         ...expenseData,
         createdAt: new Date().toISOString(),
+        user_id: user.uid,
       };
-      setExpenses([...expenses, newExpense]);
+      await supabase.from('expenses').insert([newExpense]);
+      setExpenses([newExpense, ...expenses]);
     }
   };
 
-  const handleEditExpense = (expense: Expense) => {
-    setEditingExpense(expense);
-    setIsAddModalOpen(true);
-  };
-
-  const handleDeleteExpense = (id: string) => {
+  // Update handleDeleteExpense to persist to Supabase
+  const handleDeleteExpense = async (id: string) => {
+    if (!user) return;
     if (confirm('Are you sure you want to delete this expense?')) {
+      await supabase.from('expenses').delete().eq('id', id).eq('user_id', user.uid);
       setExpenses(expenses.filter(expense => expense.id !== id));
     }
   };
@@ -153,24 +179,27 @@ function App() {
     setExpenses(updatedExpenses);
   };
 
-  const handleAddIncome = (incomeData: Omit<Income, 'id' | 'createdAt'>) => {
+  // Update add/update/delete for income
+  const handleAddIncome = async (incomeData: Omit<Income, 'id' | 'createdAt'>) => {
+    if (!user) return;
     const newIncome: Income = {
       id: Date.now().toString(),
       ...incomeData,
       createdAt: new Date().toISOString(),
+      user_id: user.uid,
     };
-    setIncome([...income, newIncome]);
+    await supabase.from('income').insert([newIncome]);
+    setIncome([newIncome, ...income]);
   };
-
-  const handleUpdateIncome = (id: string, incomeData: Partial<Income>) => {
-    const updatedIncome = income.map(inc =>
-      inc.id === id ? { ...inc, ...incomeData } : inc
-    );
-    setIncome(updatedIncome);
+  const handleUpdateIncome = async (id: string, incomeData: Partial<Income>) => {
+    if (!user) return;
+    await supabase.from('income').update(incomeData).eq('id', id).eq('user_id', user.uid);
+    setIncome(income.map(inc => inc.id === id ? { ...inc, ...incomeData } : inc));
   };
-
-  const handleDeleteIncome = (id: string) => {
+  const handleDeleteIncome = async (id: string) => {
+    if (!user) return;
     if (confirm('Are you sure you want to delete this income entry?')) {
+      await supabase.from('income').delete().eq('id', id).eq('user_id', user.uid);
       setIncome(income.filter(inc => inc.id !== id));
     }
   };
@@ -181,81 +210,81 @@ function App() {
     return date.toISOString().slice(0, 7);
   };
 
-  const handleAddEMI = (emiData: Omit<EMI, 'id' | 'createdAt' | 'totalAmount' | 'endMonth'>) => {
+  // Update add/update/delete for emis
+  const handleAddEMI = async (emiData: Omit<EMI, 'id' | 'createdAt' | 'totalAmount' | 'endMonth'>) => {
+    if (!user) return;
     const totalAmount = emiData.monthlyAmount * emiData.tenure;
     const endMonth = addMonthsToDate(emiData.startMonth, emiData.tenure - 1);
-    
     const newEMI: EMI = {
       id: Date.now().toString(),
       ...emiData,
       totalAmount,
       endMonth,
       createdAt: new Date().toISOString(),
+      user_id: user.uid,
     };
-    setEmis([...emis, newEMI]);
+    await supabase.from('emis').insert([newEMI]);
+    setEmis([newEMI, ...emis]);
   };
-
-  const handleUpdateEMI = (id: string, emiData: Partial<EMI>) => {
-    const updatedEmis = emis.map(emi => {
-      if (emi.id === id) {
-        const updated = { ...emi, ...emiData };
-        if (emiData.monthlyAmount || emiData.tenure) {
-          updated.totalAmount = updated.monthlyAmount * updated.tenure;
-          updated.endMonth = addMonthsToDate(updated.startMonth, updated.tenure - 1);
-        }
-        return updated;
-      }
-      return emi;
-    });
-    setEmis(updatedEmis);
+  const handleUpdateEMI = async (id: string, emiData: Partial<EMI>) => {
+    if (!user) return;
+    await supabase.from('emis').update(emiData).eq('id', id).eq('user_id', user.uid);
+    setEmis(emis.map(emi => emi.id === id ? { ...emi, ...emiData } : emi));
   };
-
-  const handleDeleteEMI = (id: string) => {
+  const handleDeleteEMI = async (id: string) => {
+    if (!user) return;
     if (confirm('Are you sure you want to delete this EMI?')) {
+      await supabase.from('emis').delete().eq('id', id).eq('user_id', user.uid);
       setEmis(emis.filter(emi => emi.id !== id));
     }
   };
 
-  const handleAddSavings = (savingsData: Omit<Savings, 'id' | 'createdAt'>) => {
+  // Update add/update/delete for savings
+  const handleAddSavings = async (savingsData: Omit<Savings, 'id' | 'createdAt'>) => {
+    if (!user) return;
     const newSavings: Savings = {
       id: Date.now().toString(),
       ...savingsData,
       createdAt: new Date().toISOString(),
+      user_id: user.uid,
     };
-    setSavings([...savings, newSavings]);
+    await supabase.from('savings').insert([newSavings]);
+    setSavings([newSavings, ...savings]);
   };
-
-  const handleUpdateSavings = (id: string, savingsData: Partial<Savings>) => {
-    const updatedSavings = savings.map(saving =>
-      saving.id === id ? { ...saving, ...savingsData } : saving
-    );
-    setSavings(updatedSavings);
+  const handleUpdateSavings = async (id: string, savingsData: Partial<Savings>) => {
+    if (!user) return;
+    await supabase.from('savings').update(savingsData).eq('id', id).eq('user_id', user.uid);
+    setSavings(savings.map(saving => saving.id === id ? { ...saving, ...savingsData } : saving));
   };
-
-  const handleDeleteSavings = (id: string) => {
+  const handleDeleteSavings = async (id: string) => {
+    if (!user) return;
     if (confirm('Are you sure you want to delete this savings entry?')) {
+      await supabase.from('savings').delete().eq('id', id).eq('user_id', user.uid);
       setSavings(savings.filter(saving => saving.id !== id));
     }
   };
 
-  const handleAddSubscription = (subscriptionData: Omit<Subscription, 'id' | 'createdAt'>) => {
+  // Update add/update/delete for subscriptions
+  const handleAddSubscription = async (subscriptionData: Omit<Subscription, 'id' | 'createdAt'>) => {
+    if (!user) return;
     const newSubscription: Subscription = {
       id: Date.now().toString(),
       ...subscriptionData,
       createdAt: new Date().toISOString(),
+      user_id: user.uid,
     };
-    setSubscriptions([...subscriptions, newSubscription]);
+    await supabase.from('subscriptions').insert([newSubscription]);
+    setSubscriptions([newSubscription, ...subscriptions]);
   };
-
-  const handleUpdateSubscription = (id: string, subscriptionData: Partial<Subscription>) => {
-    const updatedSubscriptions = subscriptions.map(sub =>
-      sub.id === id ? { ...sub, ...subscriptionData } : sub
-    );
-    setSubscriptions(updatedSubscriptions);
+  const handleUpdateSubscription = async (id: string, subscriptionData: Partial<Subscription>) => {
+    if (!user) return;
+    await supabase.from('subscriptions').update(subscriptionData).eq('id', id).eq('user_id', user.uid);
+    setSubscriptions(subscriptions.map(sub => sub.id === id ? { ...sub, ...subscriptionData } : sub));
   };
-
-  const handleDeleteSubscription = (id: string) => {
+  const handleDeleteSubscription = async (id: string) => {
+    if (!user) return;
     if (confirm('Are you sure you want to delete this subscription?')) {
+      await supabase.from('subscriptions').delete().eq('id', id).eq('user_id', user.uid);
       setSubscriptions(subscriptions.filter(sub => sub.id !== id));
     }
   };
